@@ -5,11 +5,15 @@ import sys
 import os
 import time
 import random
-
+import termcolor
+import curses
+import random
+from random import seed
+from random import randint
+from termcolor import colored, cprint
 
 screen_width = 100
-
-
+seed(1)
 #### Player setup (health, etc.) ####
 global starter
 starter = False
@@ -17,20 +21,32 @@ starter = False
 class player:
     def __init__(self):
         self.name = ''
+        self.nickname = ''
         self.hp = 10
         self.cp = 0
         self.gen = ''
         self.loc = 'corridor'
         self.gameovr = False
+        self.easy = False
+        self.medium = False
+        self.hard = False
 
 
 
 
 myPlayer = player()
+questions = 1
+perfect = False
+outof = 3
+points = 0
+line = ("")
+
+
 
 """ Title screen selection code """
 
 def title_screen_selections():
+    potato = ['start', 'howto', 'quit']
     global takeable_things
     global inv
     global optionlast
@@ -43,7 +59,7 @@ def title_screen_selections():
         help_menu()
     elif option.lower() == ('bhoom'):
         hello = ("""
-Ah, hello, Bhoom! I'll lead you to the game straight away!\n""")
+Creator hack accepted.\n""")
         for character in hello:
             sys.stdout.write(character)
             sys.stdout.flush()
@@ -51,7 +67,7 @@ Ah, hello, Bhoom! I'll lead you to the game straight away!\n""")
         myPlayer.name = 'Bhoom'
         myPlayer.gen = 'male'
         time.sleep(3)
-        prompt()
+        ques_10_1()
     elif option.lower() == ("quit"):
         quitter = input("""
 
@@ -76,8 +92,7 @@ Ah, hello, Bhoom! I'll lead you to the game straight away!\n""")
 
 
 
-    else:
-        restate = input(""">""")
+    elif option.lower() not in potato:
         os.system('clear')
         print("""
 
@@ -121,202 +136,203 @@ Ah, hello, Bhoom! I'll lead you to the game straight away!\n""")
             time.sleep(3)
             sys.exit()
 
-    potato = ['start', 'howto', 'quit']
     times_wrong = 2
     optionlast = input(""">""")
     os.system('clear')
     while restate not in potato:
         times_wrong += 1
-        if times_wrong == 4:
-            break
-        print("""
+        restate2 = input("> ")
+        if times_wrong < 4:
+            print("""
 
-                        No, I still didn't understand that.
-                        Maybe we should try something else.
+                            No, I still didn't understand that.
+                            Maybe we should try something else.
 
-                            What? You want to try again?
-                                Very well then...
+                                What? You want to try again?
+                                    Very well then...
 
-                    Choose between 'start', 'howto', or 'quit'.
-
-
-        """)
-
-        if option.lower() == ("start"):
-            start_game()  # placeholder until written
-        elif option.lower() == ("howto"):
-            howto()
-        elif option.lower() == ("quit"):
-            quitter = input("""
+                        Choose between 'start', 'howto', or 'quit'.
 
 
+            """)
+
+            if restate2.lower() == ("start"):
+                start_game()  # placeholder until written
+            elif restate2.lower() == ("howto"):
+                howto()
+            elif restate2.lower() == ("quit"):
+                quitter = input("""
 
 
-                                Are you sure? (y/n)
 
-        """)
-            if quitter == ("y"):
+
+                                    Are you sure? (y/n)
+
+            """)
+                if quitter == ("y"):
+                    print("""
+
+
+
+
+
+                                        Well, seeya!
+
+            """)
+                    time.sleep(3)
+                    sys.exit()
+
+        if times_wrong > 4:
+
+            os.system('clear')
+            cprint("""
+
+
+                        That was not a valid option! I've gone out of my way to try and
+                        convince you to type in the correct answers by faking that I don't
+                        understand what you said. But I actually do! THEY'RE JUST NOT ONE
+                        OF THE VALID OPTIONS!
+
+                        Why did you say that? That was not what you are supposed to say.
+                        Try saying either 'start', 'howto', or 'quit', and maybe I won't
+                        respond to you this way!
+
+
+
+
+                """, "red", attrs=['bold'])
+            option = input(""">""")
+            if option.lower() == ("start"):
                 print("""
 
+                        Finally, some sense! I'll direct you to the game right away.
+                        Bye bye, and try not to anger me with invalid options again!
 
 
 
-
-                                    Well, seeya!
-
-        """)
-                time.sleep(3)
-                sys.exit()
-
-    os.system('clear')
-    print("""
-
-
-                That was not a valid option! I've gone out of my way to try and
-                convince you to type in the correct answers by faking that I don't
-                understand what you said. But I actually do! THEY'RE JUST NOT ONE
-                OF THE *VALID OPTIONS!*
-
-                Why did you say '%s'? That was not what you are supposed to say.
-                Try saying either 'start', 'howto', or 'quit', and maybe I won't
-                respond to you this way!
-
-
-
-
-        """ % (optionlast))
-    option = input(""">""")
-    if option.lower() == ("start"):
-        print("""
-
-                Finally, some sense! I'll direct you to the game right away.
-                Bye bye, and try not to anger me with invalid options again!
-
-
-
-            """)
-        time.sleep(6)
-        os.system('clear')
-        start_game()
-    elif option.lower() == ("howto"):
-        print("""
-
-                Finally, some sense! I'll direct you to the tutorial right away.
-                Bye bye, and try not to anger me with invalid options again!
-
-
-
-            """)
-        time.sleep(6)
-        os.system('clear')
-        howto()
-    elif option.lower() == ("quit"):
-        os.system('clear')
-        quitter = input("""
-
-
-
-
-                        Seriously? After all this time bothering
-                        me, you're just gonna leave without
-                        saying sorry?     (y/n)
-
-        """)
-        if quitter == ("y"):
-            print("""
-
-
-
-
-
-                        ......
-
-                        Well...
-
-                        Just... The next time you play this game,
-                        please don't make me feel bad again.
-
-                        I'm gonna cry soon... Goodbye now...
-
-                        [sobs]
-
-        """)
-            time.sleep(7)
-            sys.exit()
-
-    else:
-        os.system('clear')
-        print("""
-
-
-                Seriously, you one very stubborn person.
-                Now please.
-                Do. Not. Enter. Invalid. Commands!
-
-                You can choose from 'start', 'howto', and 'quit'
-
-
-
-
-
-        """)
-        option = input(""">""")
-        if option.lower() == ("start"):
-            os.system('clear')
-            print("""
-
-                Finally, some sense! I'll direct you to the game right away.
-                Bye bye, and try not to anger me with invalid options again!
-
-
-
-            """)
-            time.sleep(6)
-            start_game()
-        elif option.lower() == ("howto"):
-            os.system('clear')
-            print("""
-
-                Finally, some sense! I'll direct you to the tutorial right away.
-                Bye bye, and try not to anger me with invalid options again!
-
-
-
-            """)
-            time.sleep(6)
-            howto()
-        elif option.lower() == ("quit"):
-            quitter = input("""
-
-
-
-
-                        Seriously? After all this time bothering
-                        me, you're just gonna leave without
-                        saying sorry?     (y/n)
-
-        """)
-            if quitter == ("y"):
+                    """)
+                time.sleep(6)
+                os.system('clear')
+                start_game()
+            elif option.lower() == ("howto"):
                 print("""
 
+                        Finally, some sense! I'll direct you to the tutorial right away.
+                        Bye bye, and try not to anger me with invalid options again!
+
+
+
+                    """)
+                time.sleep(6)
+                os.system('clear')
+                howto()
+            elif option.lower() == ("quit"):
+                os.system('clear')
+                quitter = input("""
 
 
 
 
-                        ......
+                                Seriously? After all this time bothering
+                                me, you're just gonna leave without
+                                saying sorry?     (y/n)
 
-                        Well...
+                """)
+                if quitter == ("y"):
+                    print("""
 
-                        Just... The next time you play this game,
-                        please don't make me feel bad again.
 
-                        I'm gonna cry soon... Goodbye now...
 
-                        [sobs]
 
-        """)
-                time.sleep(7)
-                sys.exit()
+
+                                ......
+
+                                Well...
+
+                                Just... The next time you play this game,
+                                please don't make me feel bad again.
+
+                                I'm gonna cry soon... Goodbye now...
+
+                                [sobs]
+
+                """)
+                    time.sleep(7)
+                    sys.exit()
+
+        elif times_wrong > 6:
+            os.system('clear')
+            cprint("""
+
+
+                    Seriously, you one very stubborn person.
+                    Now please.
+                    Do. Not. Enter. Invalid. Commands!
+
+                    You can choose from 'start', 'howto', and 'quit'
+
+
+
+
+
+            """, "red", attrs=['bold', 'underline', 'blink'])
+            option = input(""">""")
+            if option.lower() == ("start"):
+                os.system('clear')
+                print("""
+
+                    Finally, some sense! I'll direct you to the game right away.
+                    Bye bye, and try not to anger me with invalid options again!
+
+
+
+                """)
+                time.sleep(6)
+                start_game()
+            elif option.lower() == ("howto"):
+                os.system('clear')
+                print("""
+
+                    Finally, some sense! I'll direct you to the tutorial right away.
+                    Bye bye, and try not to anger me with invalid options again!
+
+
+
+                """)
+                time.sleep(6)
+                howto()
+            elif option.lower() == ("quit"):
+                quitter = input("""
+
+
+
+
+                            Seriously? After all this time bothering
+                            me, you're just gonna leave without
+                            saying sorry?     (y/n)
+
+            """)
+                if quitter == ("y"):
+                    print("""
+
+
+
+
+
+                            ......
+
+                            Well...
+
+                            Just... The next time you play this game,
+                            please don't make me feel bad again.
+
+                            I'm gonna cry soon... Goodbye now...
+
+                            [sobs]
+
+            """)
+                    time.sleep(7)
+                    sys.exit()
 
 
 
@@ -499,6 +515,7 @@ What is your character's gender?
     gender_in = input("> ")
     if gender_in.lower() == ("male"):
         myPlayer.gen = 'boy'
+        myPlayer
         os.system('clear')
         confirm_gen = ("""
 Hey there, %s! Just to confirm, your gender is '%s', correct?
@@ -554,7 +571,7 @@ What is your character's gender?
             if gender_2_in.lower() == ("female"):
                 os.system("clear")
                 myPlayer.gen = 'girl'
-                game
+                game()
             if gender_2_in.lower() == ("unknown"):
                 os.system("clear")
                 myPlayer.gen = 'child'
@@ -722,7 +739,6 @@ You can do it""" % (myPlayer.name))
             sys.stdout.write(character)
             sys.stdout.flush()
             time.sleep(0.09)
-
         printy2 = ("""...
 
         """)
@@ -839,6 +855,14 @@ about.
 name = ''
 DESCRIPTION = 'look'
 visited = False
+canada_done = False
+saudi_done = False
+korea_done = False
+ger_done = False
+iran_done = False
+japan_done = False
+russia_done = False
+india_done = False
 
 UP = 'up'
 DOWN = 'down'
@@ -859,10 +883,17 @@ examinable_things = []
 
 
 
-visited = {'bedroom': False, 'bathroom': False, 'livingroom': False, 'corridor': False,
-            'stairs': False, 'kitchen': False, 'diningroom': False, 'porch': False,
-            'frontyard': False, 'lab': False, 'bedroom2': False, 'bedroom3': False,
-            'bathroomcorridor': False}
+visited = {'bedroom': False, 'bathroom': False, 'corridor': False,
+            'stairs': False, 'kitchen': False, 'diningroom': False,
+            'lab': False, 'bedroom2': False, 'bedroom3': False,
+            'bathroomcorridor': False, '1stfloor': False, 'stairs1': False,
+            'doorstep': False}
+
+
+solved = {'china': False, 'usa': False, 'india': False, 'russia': False, 'japan': False, 'germany': False, 'iran': False, 'saudiarabia': False, 
+          'korea': False, 'canada': False}
+
+
 
 
 """
@@ -883,7 +914,11 @@ porch, frontyard
 
 """
 
-
+map_game = {
+    'china': {
+        name: ("China"),
+    },
+}
 
 mappy = {
     'bedroom': {
@@ -912,22 +947,38 @@ To your front is the corridor.
 
 
     },
+    'doorstep': {
+        name: ("Doorstep"),
+        DESCRIPTION: """
+This is the doorstep. Quite dusty.
+You don't dare open the door, for fear of dust.
+Nothing to see here.
+Go backwards to the path to the stairs.""",
+        FRWRD: "",
+        BCKWRD: "1stfloor",
+        LEFT: "",
+        RIGHT: "",
+        UP: "",
+        DOWN: "",
+
+
+    },
     'corridor': {
         name: ("The 2nd floor corridor"),
         DESCRIPTION: """
 
 This is the second floor corridor.
 Not much to tell here.
-To your left is the walkway to the Lab, going past both your grandparents's
-rooms. To your right is a walkway to the stairs, lined with windows.
+To your right is the walkway to the Lab, going past both your grandparents's
+rooms. To your left is a walkway to the stairs, lined with windows.
 Behind you is your bedroom.
 
 
         """,
         FRWRD: "",
         BCKWRD: "bedroom",
-        LEFT: "lab",
-        RIGHT: "stairs",
+        LEFT: "stairs",
+        RIGHT: "lab",
         UP: "",
         DOWN: "",
 
@@ -960,22 +1011,184 @@ Navigation : [left] will lead to bathroom.
         RIGHT: "bedroom3",
         UP: "",
         DOWN: "",
-        OUT: "corridor"
+        OUT: "corridor",
 
 
 
 
 
     },
+    'bathroom': {
+        name: ("The Lab's bathroom"),
+        DESCRIPTION: """
+Why are you in the bathroom?
+There doesn't seem to anything to do here, unless you count flushing the 
+toilet as interesting.
+
+Let's go. Navigation directions : Backward (to lab), and right (Granddad's Bedroom). 
+""",
+        FRWRD: "",
+        BCKWRD: "lab",
+        LEFT: "",
+        RIGHT: "bedroom3",
+        UP: "",
+        DOWN: "",
 
 
 
+
+
+    },
+    'stairs': {
+        name: ("Stairs"),
+        DESCRIPTION: """
+These are the stairs leading down.
+To go down, type [walk], then [down].
+To walk back to the corridor type [walk], then [right].
+""",
+        FRWRD: "",
+        BCKWRD: "stairs",
+        LEFT: "",
+        RIGHT: "corridor",
+        UP: "",
+        DOWN: "1stfloor",
+
+
+
+
+
+    },
+    '1stfloor': {
+        name: ("1st Floor"),
+        DESCRIPTION: """
+This is the first floor.
+To your right is the path to the kitchen and the dining room.
+To your left is the doorstep.
+Behind you are the stairs.""",
+        FRWRD: "",
+        BCKWRD: "stairs1",
+        LEFT: "doorstep",
+        RIGHT: "diningroom",
+        UP: "",
+        DOWN: "",
+
+
+
+
+
+    },
+    'stairs1': {
+        name: ("Stairs"),
+        DESCRIPTION: """
+These are the stairs leading up.
+To go up, type [walk], then [up].
+To walk back type [walk], then [backwards].
+""",
+        FRWRD: "",
+        BCKWRD: "1stfloor",
+        LEFT: "",
+        RIGHT: "",
+        UP: "corridor",
+        DOWN: "",
+
+
+
+
+
+    },
+    'diningroom': {
+        name: ("Dining room"),
+        DESCRIPTION: """
+This is the dining room. All the plates on the table are upside down,
+to protect from dust. A heating stove sits on the table.
+
+There are chairs sitting around the table. All are covered with big pieces of cloth,
+only the legs are visible.
+There is a path to the right leading to the kitchen.
+Walk backwards to go back.""",
+        FRWRD: "",
+        BCKWRD: "1stfloor",
+        LEFT: "",
+        RIGHT: "kitchen",
+        UP: "",
+        DOWN: "",
+
+
+
+
+
+    },
+    'kitchen': {
+        name: ("Kitchen"),
+        DESCRIPTION: """
+This is the kitchen. A wash basin sits over to the left. There are shelves
+stacked with instant noodles. A drawer labled 'Cutlery' sits near the 
+wash basin.
+
+Behind you is the path to the dining room.
+In front of you is the path leading to the bathroom.""",
+        FRWRD: "bathroomcorridor",
+        BCKWRD: "diningroom",
+        LEFT: "",
+        RIGHT: "",
+        UP: "",
+        DOWN: "",
+
+
+
+
+
+    },
+    'bedroom2': {
+        name: ("Grandma's Bedroom"),
+        DESCRIPTION: """
+This was your Grandma's bedroom. The room is empty and cold.
+You decide to leave, as seeing her room, you can't bear to think 
+about the fact that she's dead.
+
+Leave by typing [walk], then [backward]
+Move to Granddad's bedroom by walking right.""",
+        FRWRD: "",
+        BCKWRD: "corridor",
+        LEFT: "",
+        RIGHT: "bedroom3",
+        UP: "",
+        DOWN: "",
+
+
+
+
+
+    },
 }
+
+
+
+
+##### MAP #####
+"""
+-----------------_______|-----------|------------|
+|                |   p  |           | dining     |-------|
+|                |   o  | doorstep  | room       kitchen |-------|
+|  Front yard    |   r  |           |                    bathroom|
+|                |   c  |-------|                        |-------|
+|           -----|   h  |       |    --------------------|
+|           |    --------       |    - s t a i r s -     |
+|           |     Garage        |                        |
+|           |                   |------------------------|
+--------------------------------|
+
+"""
+
+
 def print_loc():
-    print('\n' + ('#' * (4 + len(myPlayer.loc))))
-    print('# ' + myPlayer.loc.upper() + ' #')
-    print('# ' + mappy[myPlayer.loc] [DESCRIPTION] + ' #')
-    print('\n' + ('#' * (4 + len(myPlayer.loc))))
+    if myPlayer.loc == ('bedroom3'):
+        bedroom3()
+    else:
+        print('\n' + ('#' * (4 + len(myPlayer.loc))))
+        print('# ' + myPlayer.loc.upper() + ' #')
+        print('# ' + mappy[myPlayer.loc] [DESCRIPTION] + ' #')
+        print('\n' + ('#' * (4 + len(myPlayer.loc))))
     
 def prompt():
     global takeable_things
@@ -983,98 +1196,266 @@ def prompt():
     global inv_gone2
     global inv
     os.system('clear')
-    print_loc()
-    print("""
+    while myPlayer.loc != 'bedroom3':
+        print_loc()
+        print("""
 
 To do something, use verbs such as 'examine' or 'inspect'
 Or for movement, 'walk', then specify which direction.
 
 Choose an option by typing it in and pressing enter.
 Normal commands : 'menu', 'inv'(inventory), 'exit'
-    
-    
+        
+        
 """)
-    action = input(">")
-    acceptable_actions = ['examine', 'walk', 'go to', 'talk', 'take', 'inv', 'menu', 'exit', 'inspect', 'look']
-    walk_commands = ['walk', 'go to']
-    look_commands = ['examine', 'inspect', 'look']
-    while action.lower() not in acceptable_actions:
-        os.system('clear')
-        print("""
+        action = input("> ")
+        acceptable_actions = ['examine', 'walk', 'go to', 'talk', 'take', 'inv', 'menu', 'exit', 'inspect', 'look']
+        walk_commands = ['walk', 'go to']
+        look_commands = ['examine', 'inspect', 'look']
+        while action.lower() not in acceptable_actions:
+            os.system('clear')
+            print("""
 Huh? That doesn't seem to be in the options list. Try typing 
 something that exists in there.
-        
-        
-        
-        """)
-        action = input(">")
-    if action.lower() == 'exit':
-        os.system('clear')
-        exitplay = ("""
+            
+            
+            
+""")
+            action = input(">")
+        if action.lower() == 'exit':
+            os.system('clear')
+            exitplay = ("""
 Are you sure? You will lose all progress on the game so far,
 and your character's name will be erased from the system.
 
 (y/n)
-    
         
-        """)
-        for character in exitplay:
-            sys.stdout.write(character)
-            sys.stdout.flush()
-            time.sleep(0.05)
-        exitplay_input = input("""
->""")
-        if exitplay_input == ("n"):
-            prompt()
-        elif exitplay_input == ("y"):
-            goodbye = ("""
-Goodbye, old friend. I hope to see you again.
-            
-            """)
-            for character in goodbye:
+""")
+            for character in exitplay:
                 sys.stdout.write(character)
                 sys.stdout.flush()
-                time.sleep(0.1)
-            time.sleep(4)
-            sys.exit()
-        
-    elif action.lower() in walk_commands:
-        player_move(action.lower())
-    elif action.lower() in look_commands:
-        player_examine(action.lower())
-    elif action.lower() == 'take':
-        take_things()
-    elif action.lower() == 'menu':
-        options_screen()
+                time.sleep(0.05)
+            exitplay_input = input("""
+> """)
+            if exitplay_input == ("n"):
+                prompt()
+            elif exitplay_input == ("y"):
+                goodbye = ("""
+Goodbye, old friend. I hope to see you again.
+""")
+                for character in goodbye:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.1)
+                time.sleep(4)
+                sys.exit()
+            
+        elif action.lower() in walk_commands:
+            player_move(action.lower())
+        elif action.lower() in look_commands:
+            player_examine(action.lower())
+        elif action.lower() == 'take':
+            take_things()
+        elif action.lower() == 'menu':
+            options_screen()
+    if myPlayer.loc == 'bedroom3':
+        bedroom3()
+
 
 
         
         
 def take_things():
+    global papers_taken_yes
     global inv
+    warned = False
     global takeable_things
-    take = ("""
+    if len(inv) < 10:
+        take = ("""
 What would you like to take?
 Options : %s
-(if none, no items)""" % (takeable_things))
-    for character in takeable_things:
-        sys.stdout.write(character)
-        sys.stdout.flush()
-        time.sleep(0.05)
-    take_input = input("> ")
-    if myPlayer.loc == 'bedroom':
-        if take_input == 'book':
-            book_taken = ("""
+""" % (takeable_things))
+        for character in take:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.05)
+        if myPlayer.loc == 'bedroom':
+            bedroom_take = input("> ")
+            if bedroom_take.lower() == 'book':
+                book_taken = ("""
 You have taken the book.\n""")
-            if 'book' not in inv:
-                inv.append('book')
-            else:
                 for character in book_taken:
                     sys.stdout.write(character)
-                inv_confirm = ("""
+                    sys.stdout.flush()
+                    time.sleep(0.05)
+                if 'book' not in inv:
+                    inv.append('book')
+                    inv_confirm = ("""
 This is your inventory:
 %s\n""" % (inv))
-                for character in inv_confirm:
+                    for character in inv_confirm:
+                        sys.stdout.write(character)
+                        sys.stdout.flush()
+                        time.sleep(0.05)
+                    time.sleep(3)
+                    main_loop()
+            elif bedroom_take.lower() == 'picture':
+                picture_taken = ("""
+You have taken the picture.\n""")
+                for character in picture_taken:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.05)
+                if 'picture' not in inv:
+                    inv.append('picture')
+                    inv_confirm = ("""
+This is your inventory:
+%s\n""" % (inv))
+                    for character in inv_confirm:
+                        sys.stdout.write(character)
+                        sys.stdout.flush()
+                        time.sleep(0.05)
+                    time.sleep(3)
+                    main_loop()
+            elif bedroom_take.lower() == 'gameboy':
+                gameboy_taken = ("""
+You have taken the Game Boy.\n""")
+                for character in gameboy_taken:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.05)
+                if 'gameboy' not in inv:
+                    inv.append('gameboy')
+                    inv_confirm = ("""
+This is your inventory:
+%s\n""" % (inv))
+                    for character in inv_confirm:
+                        sys.stdout.write(character)
+                        sys.stdout.flush()
+                        time.sleep(0.05)
+                    time.sleep(3)
+                    main_loop()
+            elif bedroom_take.lower() == 'clothes':
+                clothes_taken = ("""
+You have taken the your clothes.\n""")
+                for character in clothes_taken:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.05)
+                if 'clothes' not in inv:
+                    inv.append('clothes')
+                    inv_confirm = ("""
+This is your inventory:
+%s\n""" % (inv))
+                    for character in inv_confirm:
+                        sys.stdout.write(character)
+                        sys.stdout.flush()
+                        time.sleep(0.05)
+                    time.sleep(3)
+                    main_loop()
+            elif bedroom_take.lower() == 'nintendoglass':
+                nintendoglass_taken = ("""
+You have taken your Nintendo Glass.\n""")
+                for character in book_taken:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.05)
+                if 'nintendoglass' not in inv:
+                    inv.append('nintendoglass')
+                    inv_confirm = ("""
+This is your inventory:
+%s\n""" % (inv))
+                    for character in inv_confirm:
+                        sys.stdout.write(character)
+                        sys.stdout.flush()
+                        time.sleep(0.05)
+                    time.sleep(3)
+                    main_loop()
+            elif bedroom_take.lower() == 'backpack':
+                backpack_taken = ("""
+You have taken your backpack.\n""")
+                for character in backpack_taken:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.05)
+                if 'backpack' not in inv:
+                    inv.append('backpack')
+                    inv_confirm = ("""
+This is your inventory:
+%s\n""" % (inv))
+                    for character in inv_confirm:
+                        sys.stdout.write(character)
+                        sys.stdout.flush()
+                        time.sleep(0.05)
+                    time.sleep(3)
+                    main_loop()
+        elif myPlayer.loc == 'lab':
+            lab_take = input("""> """)
+            if lab_take.lower() == ('papers'):
+                papers_taken = ("""
+You fold the papers and put them in your pocket. I wonder, will
+your Granddad get mad at you for taking his papers?\n""")
+                papers_taken_yes = True
+                for character in backpack_taken:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.05)
+                if 'papers' not in inv:
+                    inv.append('papers')
+                    inv_confirm = ("""
+This is your inventory:
+%s\n""" % (inv))
+                    for character in inv_confirm:
+                        sys.stdout.write(character)
+                        sys.stdout.flush()
+                        time.sleep(0.05)
+                    time.sleep(3)
+                    main_loop()
+            elif bedroom_take.lower() == 'acid':
+                acid_taken = ("""
+You carefully take the acid. Let's hope it doesn't come in contact with air, 
+and activate.\n""")
+                for character in acid_taken:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.05)
+                if 'acid' not in inv:
+                    inv.append('acid')
+                    inv_confirm = ("""
+This is your inventory:
+%s\n""" % (inv))
+                    for character in inv_confirm:
+                        sys.stdout.write(character)
+                        sys.stdout.flush()
+                        time.sleep(0.05)
+                    time.sleep(3)
+                    main_loop()
+        elif myPlayer.loc == ('kitchen'):
+            kitchen_input = input("> ")
+            if kitchen_input.lower() == 'instantnoodles':
+                noodles_taken = ("""
+You pocket a bag of instant noodles. For later.\n""")
+                for character in noodles_taken:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.05)
+                if 'noodles' not in inv:
+                    inv.append('noodles')
+                    inv_confirm = ("""
+This is your inventory:
+%s\n""" % (inv))
+                    for character in inv_confirm:
+                        sys.stdout.write(character)
+                        sys.stdout.flush()
+                        time.sleep(0.05)
+                    time.sleep(3)
+                    main_loop()
+        elif myPlayer.loc == ('diningroom'):
+            diningroom_in = input("""> """)
+            if diningroom_in.lower() == ("plates"):
+                plates_taken = ("""
+You lift up the plate. Doesn't seem to fit in your pocket.\n""")
+                for character in plates_taken:
                     sys.stdout.write(character)
                     sys.stdout.flush()
                     time.sleep(0.05)
@@ -1083,11 +1464,20 @@ This is your inventory:
 
 
 
+    elif len(inv) > 8:
+        if warned == False:
+            nearly = ("""
+You may only store 10 items in your inventory. You currently have %d
+items in your inventory.""" % (len(inv)))
+            for character in nearly:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.05)
+            warned = True
+        elif warned == True:
+            take_things()
 
 
-
-#        takeable_things = ['papers', 'notes', 'acid']
-#        takeable_things = ['book', 'picture', 'gameboy', 'clothes', 'nintendoglass', 'backpack']
 
 
 def player_move(myAction):
@@ -1131,33 +1521,49 @@ def movement_handler(destination):
     global inv
     global inv_gone
     global inv_gone2
-    if UP == "":
-        no = ("""
-Whoops, you can't seem to punch through the ceiling to go up. 
-And there are no pathways.\n""")
-        for character in no:
+    if destination == '':
+        invalid_direction = ("""
+There doesn't seem to be a pathway leading to that direction.
+And you don't seem to be a Kung Fu master, so you can't 
+punch through the walls.""")
+        for character in invalid_direction:
             sys.stdout.write(character)
             sys.stdout.flush()
             time.sleep(0.05)
         time.sleep(3)
         prompt()
-    if DOWN == "":
-        nope = ("""
-Whoops, you can't seem to destroy the floor to go down.\nAnd there are no pathways.\n""")
-    location_player = ("""
+    else:
+        location_player = ("""
 \nYou have moved to """ + destination + ".\n")
-    for character in location_player:
-        sys.stdout.write(character)
-        sys.stdout.flush()
-        time.sleep(0.05)
-    time.sleep(2)
-    myPlayer.loc = destination
-    if myPlayer.loc == 'lab':
-        takeable_things = ['papers', 'notes', 'acid']
-        examinable_things = ['shelf', 'computer', 'acid', 'papers', 'notes']
-    if myPlayer.loc == 'bedroom':
-        takeable_things = ['book', 'picture', 'gameboy', 'clothes', 'nintendoglass', 'backpack']
-        examinable_things = ['book', 'picture', 'gameboy', 'nintendoglass']
+        for character in location_player:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.05)
+        time.sleep(2)
+        myPlayer.loc = destination
+        if myPlayer.loc == 'lab':
+            takeable_things = ['papers', 'notes', 'acid']
+            examinable_things = ['shelf', 'computer', 'acid', 'papers', 'notes']
+        elif myPlayer.loc == 'bedroom':
+            takeable_things = ['book', 'picture', 'gameboy', 'clothes', 'nintendoglass', 'backpack']
+            examinable_things = ['book', 'picture', 'gameboy', 'nintendoglass']
+        elif myPlayer.loc == 'bathroom':
+            examinable_things = ['nothing']
+        elif myPlayer.loc == 'kitchen':
+            examinable_things = ['shelves', 'washbasin']
+            takeable_things = ['instantnoodles']
+        elif myPlayer.loc == 'diningroom':
+            examinable_things = ['chair']
+            takeable_things = ['plates']
+        elif myPlayer.loc == 'corridor' or 'stairs' or 'bedroom2' or 'bedroom3' or '1stfloor' or 'stairs1' or 'doorstep':
+            del examinable_things[:]
+            del takeable_things[:]
+
+
+
+
+
+
 
 
 
@@ -1320,6 +1726,94 @@ with that word? It seems supernatural. Hmm....""")
                 time.sleep(0.06)
             time.sleep(3)
             prompt()
+    elif myPlayer.loc == 'bathroom':
+        in_bathroom = input('> ')
+        if in_bathroom == ("nothing"):
+            hint = ("""
+You have found a hint!
+The hint is : What you are looking for lies in Granddad's Bedroom.
+
+Good luck!\n""")
+            for character in hint:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.05)
+            time.sleep(3)
+            prompt()
+        while in_bathroom not in examinable_things:
+            os.system('clear')
+            invalid2 = ("""
+You can't seem to spot any such thing. I wonder, how exactly did you come up
+with that word? It seems supernatural. Hmm....""")
+            for character in invalid2:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.06)
+            time.sleep(3)
+            prompt()
+    elif myPlayer.loc == 'kitchen':
+        in_kitchen = input("""> """)
+        if in_kitchen == 'shelves':
+            shelves_examine = ("""
+You only see stacks of instant noodles on top of each other. The shelf
+itself looks quite old, but only because of the dust covering it.
+
+The noodles seem to expire next year.\n""")
+            for character in shelves_examine:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.05)
+            time.sleep(3)
+            prompt()
+        elif in_kitchen == 'washbasin':
+            washbasin_examine = ("""
+This is the wash basin.
+It looks clean on the inside.
+On the outside it's dusty.
+
+The faucet dates back to 2015. It has an old-fashioned handle instead 
+of turning on the moment you approach it like most faucets do.
+
+There is a dish holder near the wash basin. It's covered with a piece of cloth.
+""")
+            for character in washbasin_examine:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.05)
+            time.sleep(3)
+            prompt()
+        while in_kitchen not in examinable_things:
+            os.system('clear')
+            invalid2 = ("""
+You can't seem to spot any such thing. I wonder, how exactly did you come up
+with that word? It seems supernatural. Hmm....""")
+            for character in invalid2:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.06)
+            time.sleep(3)
+            prompt()
+    elif myPlayer.loc == 'diningroom':
+        in_diningroom == input("> ")
+        if in_diningroom == 'chair':
+            chair_examine == ("""
+The chair dates back to 2030.
+It's a wooden chair. One of your Granddad's.
+
+There's nothing interesting about the chair you can find.
+""")
+            for character in chair_examine:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.05)
+            time.sleep(3)
+            prompt()
+
+
+
+
+
+
 
 
 
@@ -1473,6 +1967,1234 @@ Type in [r] to return to the menu selection screen. \n""")
     about_in = input("> ")
     if about_in == ('r'):
         options_screen()
+def bedroom3():
+    global papers_taken_yes
+    bedroom3_info = ("""
+This is your Granddad's bedroom.
+Your Granddad is currently in there.
+
+
+There are pictures of famous scientists on the wall.
+There is a notebook on the bedside table.
+
+
+
+
+"Well, hello, %s!" your Granddad says. "What brings you here?"
+
+
+[a] : "Nothing, just wanted to check on you."
+[b] : "I wanted to ask you something."\n\n""" % (myPlayer.name))
+    for character in bedroom3_info:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.05)
+    bedroom3_in1 = input("> ")
+    if bedroom3_in1 == ("a"):
+        nice = ("""
+"That's nice of you, %s! Well, anyways, I better get out of bed already."
+Your Granddad starts to get up.
+
+"What say we go over to the Lab and have a little chat?"
+
+You nod in agreement.
+
+""" % (myPlayer.name))
+        for character in nice:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.05)
+        time.sleep(3)
+        moved = ("""
+You have moved to lab.""")
+        for character in moved:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.05)
+        time.sleep(3)
+        lab_chatting()
+    elif bedroom3_in1 == 'b':
+        ask = ("""
+"Hmm? Well, you say you want to ask me a question? Ask away!"
+
+
+
+[a] - "What are you working on?"
+[b] - "Why do you have books on time travel?"
+\n""")
+        for character in ask:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.05)
+        print("we got til here")
+        ask_input_1 = ("> ")
+        if ask_input_1.lower() == 'a':
+            path2()
+            print("did we get here?")
+
+        elif ask_input_1.lower() == 'b':
+            path1()
+
+
+
+def lab_chatting():
+    time_machine = colored("""handheld time machine""", "red", attrs=['bold'])
+    working_on = ("""
+"Do you know what I'm working on?"
+
+
+
+[y] - Yes
+[n] - No\n\n\n""")
+    for character in working_on:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.05)
+    working_in = input("> ")
+    if working_in.lower() == ("n"):
+        no = ("""
+Your Granddad chuckles.
+
+Granddad opens the shelf and takes out an object. It looks like the game-
+console-looking thing.
+
+
+"This is a %s." """ % (time_machine))
+        for character in no:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.06)
+        time.sleep(3)
+        next()
+        
+    elif working_in.lower() == ("y"):
+        yes = ("""
+"Wow, really? And I thought I was being secret about it."
+
+Your Granddad chuckles.
+
+Granddad opens the shelf and takes out an object. It looks like the game-
+console-looking thing.
+
+
+"This is a %s." """ % (time_machine))
+        for character in yes:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.06)
+        time.sleep(3)
+        next()
+
+        
+
+
+
+
+
+
+def next():
+    serious = ("""
+"Yes, I'm serious!"
+
+Your Granddad laughs. 
+
+"I've been trying this out many times. I don't anymore, though, I'm too old
+to travel back through space-time again. And ever since that epidemic occured,
+I don't dare exit the house to find new parts."
+
+
+You have no idea what he's talking about. What epidemic?
+
+
+                            [c]
+                        {continue}
+
+\n""")
+    for character in serious:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.05)
+    serious_in = input("> ")
+    if serious_in.lower() == 'c':
+        serious2 = ("""
+"Ah, of course! You don't know anything about the epidemic yet.
+It occured a few months after your birth. Your parents immediately
+went out and filed a complaint to the plastic and meat industry."
+
+
+"Why meat, Granddad? There's nothing wrong with meat, is there?"
+\n
+
+                          [c]
+                      {continue}\n\n""")
+        for character in serious2:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.05)
+        serious2_in = input("> ")
+        if serious2_in == 'c':
+            meat = ("""
+Your Granddad looks at you.
+
+
+"Meat production is extremely climate-harming." Granddad says.
+"for each hamburger you eat, it requires 660 gallons of water, did you know that?
+Plus, cows produce a lot of waste and methane, multiply that by 200 cows in each farm.
+We're not even supposed to be eating meat. Our intestines are meant for eating plants.
+Farming a lot of cows also produces sicknesses, so antibiotics are used. But that increases
+the chance of creating a superbug, an antibiotic-resistant virus that could plague the world.
+So, naturally, your mom and dad, who were vegans, like me, went against the meat industry.\n
+
+                         [c]
+                      {continue}
+\n\n\n""")
+            for character in meat:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.05)
+            meat_in = input("> ")
+            if meat_in == 'c':
+                died = ("""
+Granddad sighs.
+
+“They both died from the disease itself, after a few months. You were hardly 1 year old at that time.”
+"The environment has gotten so much worse because nobody listened at that time. And now it's so bad
+that even I can't have created a gadget to help the world."\n\n
+""")
+                for character in died:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.08)
+                time.sleep(3)
+                os.system('clear')
+                stringy = ("")
+                if myPlayer.gen == 'boy':
+                    stringy = ("m'boy")
+                elif myPlayer.gen == 'girl':
+                    stringy = (myPlayer.name)
+                brainwave = ("""
+"Why don't we go back and prevent the disease from being created by using the time machine, Granddad?"
+
+Your Granddad looks at you. 
+
+"I would love to do that, %s, but I'm too old to travel through time anymore. If I do, there is a 
+risk that I would die along the way."
+
+
+
+"Then why don't I do it?"
+
+
+"It's too dangerous, %s. I wouldn't want to lose you too." 
+
+
+""" % (myPlayer.name, myPlayer.name))
+                for character in brainwave:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.07)
+                time.sleep(4)
+                choice_text = ("""
+Make the choice.
+
+
+
+
+[a] - "I can do it."
+[b] - Agree, and abandon the idea.
+\n""")
+                for character in choice_text:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.05)
+                choice_input = input("> ")
+                if choice_input == 'a':
+                    sure_message = ("""
+"Are you sure, %s? This is very dangerous. Think carefully."
+
+
+You start to have doubts.
+
+
+
+Confirm your choice.
+
+
+[y] - "Yes"
+[n] - "No" """ % (myPlayer.name))
+                    for character in sure_message:
+                        sys.stdout.write(character)
+                        sys.stdout.flush()
+                        time.sleep(0.05)
+                    sure_input = input("> ")
+                    if sure_input == 'y':
+                        go = ("""
+Your Granddad looks at you and sighs.
+
+"I guess." Granddad slowly says.\n """)
+                        for character in go:
+                            sys.stdout.write(character)
+                            sys.stdout.flush()
+                            time.sleep(0.05)
+                        time.sleep(3)
+                        go2 = ("""
+"I don't want you to be in danger, but..."
+
+Granddad looks stressed.
+\n""")
+                        for character in go2:
+                            sys.stdout.write(character)
+                            sys.stdout.flush()
+                            time.sleep(0.08)
+                        time.sleep(4)
+                        go3 = ("""
+"The time machine is to be handled carefully, it's very delicate."
+"It can only be powered by 2 quartz crystals, and can only be 
+kick-started with equipment of today, so you should mind the power. 
+If you run out of power, you would be stuck in the past." 
+
+
+Your Granddad reels that off and then looks at you.
+
+
+
+"If anything happened to you, your mother would never forgive me."
+
+Granddad chuckles. """)
+                        for character in go3:
+                            sys.stdout.write(character)
+                            sys.stdout.flush()
+                            time.sleep(0.07)
+                        time.sleep(4)
+                        go4 = ("""
+"Press the yellow button to travel. Spin the dial to adjust the year. Those are the
+basics."
+
+
+Granddad puts his arm on your shoulder.
+
+"Good luck, %s."\n\n\n""" % (myPlayer.name))
+                        for character in go4:
+                            sys.stdout.write(character)
+                            sys.stdout.flush()
+                            time.sleep(0.06)
+                        time.sleep(5)
+                        go5 = ("""
+You set the dial for 2019.
+
+
+
+
+
+"Come back, okay?" Granddad says.
+
+
+
+Type in 't' to travel. """)
+                        for character in go5:
+                            sys.stdout.write(character)
+                            sys.stdout.flush()
+                            time.sleep(0.07)
+                        input_time = input("> ")
+                        if input_time.lower() == 't':
+                            initiated = colored("""
+\n\nTime travel initiated.""", "red", attrs=['bold'])
+                            for character in initiated:
+                                sys.stdout.write(character)
+                                sys.stdout.flush()
+                                time.sleep(0.05)
+                            time.sleep(2)
+                            cprint("""
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||    
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||""", "red", attrs=['reverse', 'bold', 'blink'])
+                            time.sleep(5)
+                            os.system('clear')
+                            game_true()
+
+
+
+
+
+
+
+    while serious_in.lower not in ['c']:
+        hmm = ("""
+Hmm, that didn't seem to be an option.\n""")
+        for character in hmm:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.05)
+        time.sleep(2)
+        next()
+def path1():
+    bookstimetravel = ("""
+"It has to do with the thing that I'm working on. Would you like to see it?"
+
+Your Granddad says.
+
+
+You nod your head.\n""")
+    for character in bookstimetravel:
+        sys.stdout.write(character)
+        sys.stdout.write()
+        time.sleep(0.05)
+    time.sleep(3)
+    lab_chatting()
+def path2():
+    lab_goto = ("""
+"We can talk about this in the lab. What I'm working on is also in the
+lab." \n
+You nod in agreement.""")
+    for character in lab_goto:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.05)
+    time.sleep(3)
+    lab_chatting()
+
+
+
+def game_true():
+    welcome_2019 = ("""
+Welcome to 2019.
+You are in a room.
+
+Wait, a room? This seems to be a holo-room. There are no doors. On the screen there is a list of 10 countries.
+
+You find a memo attached to the time-machine, saying "You will emerge in a room, but this is just a function I implimented
+so that you can travel all over the world. More details are availible in the time machine. Press the green button."
+
+
+
+
+
+
+                                                Press green button.
+
+                                                       [g]
+                                                                     \n""")
+    for character in welcome_2019:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.05)
+    input_game = input("> ")
+    if input_game == ("g"):
+        g_details = ("""
+You press the green button.
+
+The screen says : "loading space-time portal email system."
+
+
+
+
+
+It's finished loading. There is a message saying:
+
+
+
+
+Hey there, %s! This is the space-time portal email system. Welcome to 2019!
+
+
+There is a message from Granddad.
+
+
+
+"Dear %s,
+
+
+You must be quite confused. This is a holo-room I created to make my time-traveling
+easier. You see the countries on the screen? These are the countries creating the most environmental damage.
+You must use your knowledge of electronics to create a machine that will help solve the problem of these countries.
+
+
+This holo-room was designed so I could travel anywhere, but since you're using it, I used remote settings to 
+change it from all countries to countries affecting the climate the most.
+
+
+
+Try to stop the meat and dairy industry as well, otherwise, the disease might still be there.
+
+
+Good luck." \n\n\n\n\n\n\n\n\n\n\n\n\n\n
+You look at the screen.""" % (myPlayer.name, myPlayer.name))
+        for character in g_details:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.07)
+        time.sleep(3)
+        check()
+        
+
+
+def prompt_game():
+    check()
+    if myPlayer.easy == False:
+        print("""
+{Time Machine Virtual Room}
+
+
+{Welcome, %s! This is the Virtual Room. Your chosen countries are below.}
+
+
+
+
+Countries (by most polluting first):
+
+1. ����� - Locked
+2. ��� - Locked
+3. ����� - Locked
+4. ������ - Locked
+5. ����� - Locked
+6. ������� - Locked
+7. ���� - Locked
+8. Saudi Arabia
+9. South Korea
+10. Canada
+
+
+Countries are sorted with pollution by C02 emissions.
+
+
+Type in the number of the country you would like to go to.
+""" % (myPlayer.name))
+        input_prompt_game = input("> ").lower().strip()
+        if input_prompt_game == "10":
+            os.system('clear')
+            time.sleep(1)
+            touch = ("""
+You touch the little tab marked 'Canada'.
+
+
+
+Suddenly, the room whirres.""")
+            for character in touch:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.07)
+            time.sleep(2)
+            os.system('clear')
+            time.sleep(1)
+            canada()
+        elif input_prompt_game == "9":
+            os.system('clear')
+            touch9 = ("""
+
+You touch 'South Korea'.
+
+The room whirres into action.""")
+            for character in touch9:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.07)
+            time.sleep(2)
+            os.system('clear')
+            time.sleep(1)
+            southkorea()
+        elif input_prompt_game == "8" or "eight" or "8.":
+            arabia()
+    elif myPlayer.easy == True and myPlayer.medium == False:
+        print("""
+{Time Machine Virtual Room}
+
+
+{Welcome, %s! This is the Virtual Room. Your chosen countries are below.}
+
+
+
+
+Countries (by most polluting first):
+
+1. ����� - Locked
+2. ��� - Locked
+3. India
+4. Russia
+5. Japan
+6. Germany
+7. Iran
+8. Saudi Arabia - COMPLETED
+9. South Korea - COMPLETED
+10. Canada - COMPLETED
+
+
+Countries are sorted with pollution by C02 emissions.
+
+
+Type in the number of the country you would like to go to.
+""" % (myPlayer.name))
+
+
+
+def check():
+    global canada_done
+    global korea_done
+    global saudi_done
+    global iran_done
+    global ger_done
+    global japan_done
+    global russia_done
+    global india_done
+    if canada_done and korea_done and saudi_done == True:
+        myPlayer.easy = True
+        prompt_game()
+
+
+
+def southkorea():
+    os.system('clear')
+    korea_text = ("""
+You are in South Korea.
+
+
+Would you like to [explore] the area, or [build] the machine to help the country?\n
+""")
+    for character in korea_text:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.05)
+    korea_input = input("""> """).lower().strip()
+    if korea_input == 'explore':
+        explore_korea()
+    elif korea_input == 'build':
+        build_korea()
+
+def explore_korea():
+    os.system('clear')
+    explore_korea1 = ("""
+You seem to be in Seoul.
+
+The air is filled with sound.
+
+It is approximately 10 am.
+
+
+Would you like to examine the [air] go [back]? \n\n\n\n""")
+    for character in explore_korea1:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.05)
+    input_explorekorea1 = input("> ")
+    if input_explorekorea1 == 'air':
+        air_examine_korea = ("""
+The PM 2.5 micron dust levels are higher than reccommended. Wow, the air pollution is high.
+
+
+Enter to go back.\n\n\n""")
+        input_air = input("")
+        southkorea()
+    elif input_explorekorea1 == 'back':
+        southkorea()
+def build_korea():
+    pm25 = ("""
+To build a machine you must have data of the environment.""")
+    for character in pm25:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.1)
+    time.sleep(2)
+    pm25in1 = input("\nEnter to continue")
+    os.system('clear')
+    pm252 = ("""
+You must click when you see a PM 2.5 dust piece.""")
+    for character in pm252:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.08)
+    pm25in2 = input("\nEnter to start")
+    os.system('clear')
+    cprint("Game starts in 5", "red", attrs=['bold'])
+    time.sleep(1)
+    os.system('clear')
+    cprint("Game starts in 4", "red", attrs=['bold'])
+    time.sleep(1)
+    os.system('clear')
+    cprint("Game starts in 3", "red", attrs=['bold'])
+    time.sleep(1)
+    os.system('clear')
+    cprint("Game starts in 2", "red", attrs=['bold'])
+    time.sleep(1)
+    os.system('clear')
+    cprint("Game starts in 1", "red", attrs=['bold'])
+    time.sleep(1)
+    os.system('clear')
+    cprint("Game starts in 0", "red", attrs=['bold'])
+    time.sleep(1)
+    cprint("Start", "red", attrs=['bold'])
+    time.sleep(3)
+    curses.wrapper(korea_clicker_game)
+
+
+def korea_clicker_game(stdscr):
+    stdscr.clear()
+    curses.curs_set(0)
+    curses.mousemask(1)
+    pm25_points = 0
+    pm25_time = 10
+    while pm25_time > 0:
+        time.sleep(3)
+        value = randint(0, 1)
+        if value == 0:
+            stdscr.addstr(9, 0, """
+        ______________________________________________________
+        |                                                    |
+        |               Laser particle sensor                |
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        |              [No particles detected]               |
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        |____________________________________________________|
+
+""")
+            time.sleep(3)
+            curses.wrapper(korea_clicker_game)
+        elif value == 1:
+            stdscr.addstr(9, 0, """
+        ______________________________________________________
+        |                                                    |
+        |               Laser particle sensor                |
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        |                   __________                       |
+        |                  |  PM 2.5  |                      |
+        |                  |          |                      |
+        |                  |          |                      |
+        |                  |  Alert!  |                      |
+        |                  |__________|                      |
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        |____________________________________________________|
+
+""")    
+            key = stdscr.getch()
+            if key == curses.KEY_MOUSE:
+                _, x, y, _, _ = curses.getmouse()
+                if y in range(9, 18) and x in range(4, 54):
+                    pm25_points += 1
+                    pm25_time -= 1
+                    curses.wrapper(korea_clicker_game)
+
+
+
+
+
+
+
+
+
+
+def canada():
+    canada_text = ("""
+You are in Canada.
+
+
+A soft breeze hits your face.
+
+
+
+Would you like to [explore] the area, or [build] the machine to help the country?\n
+""")
+    for character in canada_text:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.05)
+    canada_input = input("""> """).lower().strip()
+    if canada_input == 'explore':
+        explore_canada()
+    elif canada_input == 'build':
+        build_canada()
+
+def explore_canada():
+    explore_canada1 = ("""
+You walk around. You seem to be in Vancouver.
+
+
+A Canadian walks by.
+
+
+Should you test the [water] or the [air] first?\n\n\nOr, type in [back] to return to the options screen.
+""")
+    for character in explore_canada1:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.05)
+    input_explorecanada1 = input("> ")
+    if input_explorecanada1 == 'back':
+        canada()
+    elif input_explorecanada1 == 'water':
+        how = ("""
+How would you do that? You don't seem to have anything that can scan water.
+
+You pick the handheld time machine out of your pocket.
+
+There is a function to measure water pollution after all.
+
+
+""")
+        for character in how:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.05)
+        time.sleep(3)
+        water = ("""
+You measure the water in a small lake.
+
+
+This water is not safe.
+
+It was probably polluted because of acid rain from oil sands.
+
+
+                    [back]\n\n""")
+        for character in water:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.05)
+        time.sleep(0.05)
+        input_water = input("""> """).lower().strip()
+        if input_water == 'back':
+            explore_canada()
+    elif input_explorecanada1 == 'air':
+        measure = ("""
+There is a function to measure air in the time machine. Quite thoughtful, Granddad.
+
+Type in 'measure' to measure.\n\n""")
+        for character in measure:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.05)
+        measure_input_canada = input("> ").lower().strip()
+        if measure_input_canada == 'measure':
+            measured = ("""
+You press 'measure'.
+
+
+The air pollution levels are quite high as well.
+
+It comes from oil production, I think.
+
+
+            [back]\n\n\n\n""")
+            for character in measured:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.05)
+            input_back = input("> ").lower().strip()
+            if input_back == 'back':
+                explore_canada()
+def build_canada():
+    intro_10 = ("""
+To build a machine, you must have knowledge of climate change.\n""")
+    for character in intro_10:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.1)
+    ques_10 = ("""
+You must answer 3 questions about climate change to build a machine.
+
+(Hint. [explore] will help you get more info.)\n""")
+    for character in ques_10:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.1)
+    time.sleep(3)
+    ques_start = input(colored("""Enter to continue """, "red", attrs=['bold']))
+    os.system('clear')
+    start = colored("""
+Start.\n\n\n\n""", "red",  attrs=['bold'])
+    for character in start:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.2)
+    time.sleep(4)
+    ques_10_1()
+
+
+
+
+
+
+
+
+
+
+
+
+
+def ques_10_1():
+    global perfect
+    global questions
+    global outof
+    global points
+    if questions == 1:
+        ques_1_10 = ("""
+QUESTION 1:
+
+
+What causes most air pollution in Canada?
+
+
+[a] - Transportation.
+[b] - Oil production.
+[c] - Factory exhaust.
+[d] - All of above.
+
+""")
+        for character in ques_1_10:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.02)
+        ques_1_in_10 = input("> ")
+        if ques_1_in_10 == 'a':
+            if points == 0:
+                outof -= 1
+                questions = 2
+                ques_10_1()
+            else:
+                questions = 2
+                ques_10_1()
+        elif ques_1_in_10 == 'b':
+            if points == 0:
+                points += 1
+                questions = 2
+                ques_10_1()
+            else:
+                questions = 2
+                ques_10_1()
+        elif ques_1_in_10 == 'c':
+            if points == 0:
+                points -= 1
+                questions = 2
+                ques_10_1()
+            else:
+                questions = 2
+                ques_10_1()
+        elif ques_1_in_10 == 'd':
+            if points == 0:
+                points -= 1
+                questions = 2
+                ques_10_1()
+            else:
+                questions = 2
+                ques_10_1()
+
+    elif questions == 2:
+        ques_2_10 = ("""
+QUESTION 2:
+
+What does the term 'Climate Change' mean?
+
+[a] - The warming of the planet
+[b] - The sea's acidification
+[c] - More people in a room
+[d] - Neighbors moving in
+[e] - A and B, etc.
+[f] - None of above.\n\n\n""")
+        for character in ques_2_10:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.02)
+        ques_2_in_10 = input("> ")
+        if ques_2_in_10 == 'a':
+            if points == 1:
+                outof -= 1
+                points -= 1
+                questions = 3
+                ques_10_1()
+            else:
+                questions = 3
+                outof -= 1
+                ques_10_1()
+        elif ques_2_in_10 == 'b':
+            if points == 3:
+                points -= 1
+                outof -= 1
+                questions = 3
+                ques_10_1()
+            else:
+                questions = 3
+                outof -= 1
+                ques_10_1()
+        elif ques_2_in_10 == 'c':
+            if points == 1:
+                points -= 1
+                outof -= 1
+                questions = 3
+                ques_10_1()
+            else:
+                questions = 3
+                outof -= 1
+                ques_10_1()
+        elif ques_2_in_10 == 'd':
+            if points == 1:
+                points -= 1
+                outof -= 1
+                questions = 3
+                ques_10_1()
+            else:
+                questions = 3
+                outof -= 1
+                ques_10_1()
+        elif ques_2_in_10 == 'e':
+            points += 1
+            questions = 3
+            ques_10_1()
+        elif ques_2_in_10 == 'f':
+            if points == 1:
+                outof -= 1
+                points -= 1
+                questions = 3
+                ques_10_1()
+            else:
+                questions = 3
+                outof -= 1
+                ques_10_1()
+    elif questions == 3:
+        ques_3_10 = ("""
+QUESTION 3:
+
+
+What causes the pollution of water in Canada?
+
+[a] - Acid rain from oil sands
+[b] - Dirt
+[c] - Rocks
+[d] - None of above\n\n\n\n\n\n\n\n""")
+        for character in ques_3_10:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.02)
+        ques_1_in_10 = input("> ")
+        if ques_1_in_10 == 'a':
+            points += 1
+            questions = 4
+            ques_10_1()
+        elif ques_2_in_10 == 'b':
+            if points > 0:
+                points -= 1
+                questions = 4
+                ques_10_1()
+            else:
+                questions = 4
+                ques_10_1()
+        elif ques_2_in_10 == 'c':
+            if points > 0:
+                points -= 1
+                questions = 4
+                ques_10_1()
+            else:
+                questions = 4
+                ques_10_1()
+        elif ques_2_in_10 == 'd':
+            if points > 0:
+                points -= 1
+                questions = 4
+                ques_10_1()
+            else:
+                questions = 4
+                ques_10_1()
+    elif questions == 4:
+        os.system('clear')
+        if points == 3:
+            perfect = True
+            line = ("Congratulations! You won.")
+        elif points == 2:
+            perfect = False
+            line = ("Good job.")
+        elif points == 1:
+            perfect = False
+            line = ("You could have done better.")
+        score_print = ("""
+
+You have completed the questions.
+
+
+
+This is your score : %d
+
+You got %d out of 3 questions correct.
+
+%s
+
+
+Would you like to [retry] or [continue]?
+
+
+""" % (points, outof, line))
+        for character in score_print:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.06)
+        input_score_print = input("> ")
+        if input_score_print == 'retry':
+            os.system('clear')
+            perfect = False
+            outof = 5
+            points = 0
+            questions = 1
+            print("Restarting quiz in 5 seconds")
+            time.sleep(4)
+        elif input_score_print == 'continue':
+            if points == 3:
+                printer = ("""
+You built a solar power generator magnifier design and a prototype for the 
+government to reproduce. It seems they've realized what they're doing to the environment.
+
+
+Good job. 9 more to go.\n\n\n""")
+                for character in printer:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.05)
+                time.sleep(3)
+                os.system('clear')
+                canada_done = True
+                print("[Returning to Virtual Room...]")
+                time.sleep(3)
+                prompt_game()
+            elif points == 2:
+                printer = ("""
+You built a generator powered by C02 to attach to cars, and sold the designs to the government. 
+
+Good job. 9 more to go.\n\n\n""")
+                for character in printer:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.05)
+                time.sleep(3)
+                os.system('clear')
+                canada_done = True
+                print("[Returning to Virtual Room...]")
+                time.sleep(3)
+                prompt_game()
+            elif points == 1:
+                printer = ("""
+You struggled, but could not think of something to help the environment. Sorry, Granddad.
+
+\n\n\n""")
+                for character in printer:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.05)
+                time.sleep(3)
+                os.system('clear')
+                canada_done = False
+                print("[Returning to Virtual Room...]")
+                time.sleep(3)
+                prompt_game()
+
+
+
+
+
+
+
+
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
