@@ -8,8 +8,11 @@ To set up (for MacOS):
 Go to https://www.python.org/. 
 Hover your mouse over 'Downloads'. 
 Click 'Download Python X.X.X'. 
-Then, move the 'fixthepast' folder to your Desktop folder. Then open up Terminal (Launchpad > Other > Terminal). 
-Enter the command 'cd Desktop/fixthepast' (is case sensitive) press enter, then 'python3 TextAdventureGame.py' 
+Then, move the 'fixthepast-master' folder to your Desktop folder. Then open up Terminal (Launchpad > Other > Terminal).
+
+Resize the terminal window to full screen.
+
+Enter the command 'cd Desktop/fixthepast-master' (is case sensitive) press enter, then 'python3 TextAdventureGame.py' 
 
 
 
