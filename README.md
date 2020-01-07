@@ -17,3 +17,5 @@ Enter the command 'cd Desktop/fixthepast-master' (is case sensitive) press enter
 
 
 Have fun!
+
+*Note. This game is incomplete. If you find any bugs, please drop me an email at rocketbhoom@gmail.com
