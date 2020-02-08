@@ -67,7 +67,7 @@ Creator hack accepted.\n""")
         myPlayer.name = 'Bhoom'
         myPlayer.gen = 'male'
         time.sleep(3)
-        ques_10_1()
+        southkorea()
     elif option.lower() == ("quit"):
         quitter = input("""
 
@@ -388,7 +388,6 @@ def help_menu():
         input_2 = input("""
 
                         |||||||||||||||||||||||||||||||||||||
-                        |...................................|
                         |.          - Tutorial -           .|
                         |.    You're doing it! Good job.   .|
                         |.   Now try choosing something.   .|
@@ -470,7 +469,7 @@ def start_game():
     starter = False
     os.system("clear")
     question1 = """
-    
+
 Name your character.\n"""
     for character in question1:
         sys.stdout.write(character)
@@ -576,8 +575,8 @@ What is your character's gender?
                 os.system("clear")
                 myPlayer.gen = 'child'
                 game()
-                
-                
+
+
         elif confirm_gender.lower() == ("y"):
             game()
     if gender_in.lower() == ("female"):
@@ -640,7 +639,7 @@ What is your character's gender?
                 os.system("clear")
                 myPlayer.gen = 'child'
                 game()
-                
+
         elif confirm_gen_in2.lower() == ("y"):
             game()
     if gender_in.lower() == ("unknown"):
@@ -705,8 +704,8 @@ What is your character's gender?
                 os.system("clear")
                 myPlayer.gen = 'child'
                 game()
-                
-                
+
+
         if confirm_gen_in2.lower() == ("y"):
             game()
 
@@ -750,9 +749,9 @@ You can do it""" % (myPlayer.name))
         os.system('clear')
         starter = True
         game()
-        
-        
-        
+
+
+
     elif starter == True:
         os.system("clear")
         what = ("""
@@ -800,9 +799,9 @@ about.
             sys.stdout.flush()
             time.sleep(0.1)
 
-    
+
         no_input = input("""
-        
+
         """)
         if no_input == ('c'):
             os.system('clear')
@@ -810,8 +809,8 @@ about.
 
 
 
-        
-    
+
+
 
 
 ##### MAP #####
@@ -852,6 +851,74 @@ about.
 |                   -S-
 
 """
+
+
+a1 = False
+a2 = False
+a3 = False
+a4 = False
+a5 = False
+b1 = False
+b2 = False
+b3 = False
+b4 = False
+b5 = False
+c1 = False
+c2 = False
+c3 = False
+c4 = False
+c5 = False
+d1 = False
+d2 = False
+d3 = False
+d4 = False
+d5 = False
+mrjohn_yes = False
+map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111      1                                     +      0
+       A        0  1           1        4444444444444444444444444  + + +    0
+                0  1           1        4                            +      0
+                0  11111111    1                                            0
+                0---------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111             11111111    4444444444444  11111111 0
+                0  1                           1                   1        0
+       C        0  1                           1                   1        0
+                0  1        44444444444        1                   1        0
+                0---------------------------------------------------------- 0
+                0                                                       4   0
+                0  444444444 111111111                                  4   0
+                0  4         1                                          4   0
+                0  4         1                                          4   0
+                0  4         1       444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+
+energy = 5
+stringy2 = ""
+pm25_points = 0
+pm25_time = 0
+pm25_outof = 7
 name = ''
 DESCRIPTION = 'look'
 visited = False
@@ -863,7 +930,9 @@ iran_done = False
 japan_done = False
 russia_done = False
 india_done = False
-
+source1 = False
+source2 = False
+source3 = False
 UP = 'up'
 DOWN = 'down'
 FRWRD = 'forward'
@@ -871,10 +940,6 @@ BCKWRD = 'back'
 LEFT = 'left'
 RIGHT = 'right'
 OUT = 'out'
-global inv
-global inv_gone
-global inv_gone2
-global takeable_things
 inv_gone = False
 inv_gone2 = False
 inv = []
@@ -886,11 +951,11 @@ examinable_things = []
 visited = {'bedroom': False, 'bathroom': False, 'corridor': False,
             'stairs': False, 'kitchen': False, 'diningroom': False,
             'lab': False, 'bedroom2': False, 'bedroom3': False,
-            'bathroomcorridor': False, '1stfloor': False, 'stairs1': False,
+            '1stfloor': False, 'stairs1': False,
             'doorstep': False}
 
 
-solved = {'china': False, 'usa': False, 'india': False, 'russia': False, 'japan': False, 'germany': False, 'iran': False, 'saudiarabia': False, 
+solved = {'china': False, 'usa': False, 'india': False, 'russia': False, 'japan': False, 'germany': False, 'iran': False, 'saudiarabia': False,
           'korea': False, 'canada': False}
 
 
@@ -996,7 +1061,7 @@ There is a bottle with a strange-looking liquid labeled 'Prototype 2'. There's a
 saying 'Warning : contains acid'.
 There are notes with your Granddad's handwriting taped all over the desk.
 The computer is on. The screen glows faintly.
-There is a special navigation function here. By typing 'walk', then typing 'out', 
+There is a special navigation function here. By typing 'walk', then typing 'out',
 you will exit the lab and move to the corridor.
 
 Navigation : [left] will lead to bathroom.
@@ -1022,10 +1087,10 @@ Navigation : [left] will lead to bathroom.
         name: ("The Lab's bathroom"),
         DESCRIPTION: """
 Why are you in the bathroom?
-There doesn't seem to anything to do here, unless you count flushing the 
+There doesn't seem to anything to do here, unless you count flushing the
 toilet as interesting.
 
-Let's go. Navigation directions : Backward (to lab), and right (Granddad's Bedroom). 
+Let's go. Navigation directions : Backward (to lab), and right (Granddad's Bedroom).
 """,
         FRWRD: "",
         BCKWRD: "lab",
@@ -1122,12 +1187,12 @@ Walk backwards to go back.""",
         name: ("Kitchen"),
         DESCRIPTION: """
 This is the kitchen. A wash basin sits over to the left. There are shelves
-stacked with instant noodles. A drawer labled 'Cutlery' sits near the 
+stacked with instant noodles. A drawer labled 'Cutlery' sits near the
 wash basin.
 
 Behind you is the path to the dining room.
-In front of you is the path leading to the bathroom.""",
-        FRWRD: "bathroomcorridor",
+""",
+        FRWRD: "",
         BCKWRD: "diningroom",
         LEFT: "",
         RIGHT: "",
@@ -1139,11 +1204,12 @@ In front of you is the path leading to the bathroom.""",
 
 
     },
+
     'bedroom2': {
         name: ("Grandma's Bedroom"),
         DESCRIPTION: """
 This was your Grandma's bedroom. The room is empty and cold.
-You decide to leave, as seeing her room, you can't bear to think 
+You decide to leave, as seeing her room, you can't bear to think
 about the fact that she's dead.
 
 Leave by typing [walk], then [backward]
@@ -1189,7 +1255,7 @@ def print_loc():
         print('# ' + myPlayer.loc.upper() + ' #')
         print('# ' + mappy[myPlayer.loc] [DESCRIPTION] + ' #')
         print('\n' + ('#' * (4 + len(myPlayer.loc))))
-    
+
 def prompt():
     global takeable_things
     global inv_gone
@@ -1205,8 +1271,8 @@ Or for movement, 'walk', then specify which direction.
 
 Choose an option by typing it in and pressing enter.
 Normal commands : 'menu', 'inv'(inventory), 'exit'
-        
-        
+
+
 """)
         action = input("> ")
         acceptable_actions = ['examine', 'walk', 'go to', 'talk', 'take', 'inv', 'menu', 'exit', 'inspect', 'look']
@@ -1215,11 +1281,11 @@ Normal commands : 'menu', 'inv'(inventory), 'exit'
         while action.lower() not in acceptable_actions:
             os.system('clear')
             print("""
-Huh? That doesn't seem to be in the options list. Try typing 
+Huh? That doesn't seem to be in the options list. Try typing
 something that exists in there.
-            
-            
-            
+
+
+
 """)
             action = input(">")
         if action.lower() == 'exit':
@@ -1229,7 +1295,7 @@ Are you sure? You will lose all progress on the game so far,
 and your character's name will be erased from the system.
 
 (y/n)
-        
+
 """)
             for character in exitplay:
                 sys.stdout.write(character)
@@ -1249,7 +1315,7 @@ Goodbye, old friend. I hope to see you again.
                     time.sleep(0.1)
                 time.sleep(4)
                 sys.exit()
-            
+
         elif action.lower() in walk_commands:
             player_move(action.lower())
         elif action.lower() in look_commands:
@@ -1263,8 +1329,8 @@ Goodbye, old friend. I hope to see you again.
 
 
 
-        
-        
+
+
 def take_things():
     global papers_taken_yes
     global inv
@@ -1413,7 +1479,7 @@ This is your inventory:
                     main_loop()
             elif bedroom_take.lower() == 'acid':
                 acid_taken = ("""
-You carefully take the acid. Let's hope it doesn't come in contact with air, 
+You carefully take the acid. Let's hope it doesn't come in contact with air,
 and activate.\n""")
                 for character in acid_taken:
                     sys.stdout.write(character)
@@ -1486,8 +1552,8 @@ def player_move(myAction):
     global inv_gone2
     global inv
     ask = """
-    
-    
+
+
 Use [forward], [backward], [left], [right], [up], or [down] to navigate.\n
 \n """
     for character in ask:
@@ -1524,7 +1590,7 @@ def movement_handler(destination):
     if destination == '':
         invalid_direction = ("""
 There doesn't seem to be a pathway leading to that direction.
-And you don't seem to be a Kung Fu master, so you can't 
+And you don't seem to be a Kung Fu master, so you can't
 punch through the walls.""")
         for character in invalid_direction:
             sys.stdout.write(character)
@@ -1598,7 +1664,7 @@ The handheld-game-console looking object remains a mystery.\n""")
 The computer screen shows a calculator app with some numbers.
 Beside the calculator app is a programming application that
 you seem to know. Upon closer inspection, it seems to be
-your favorite code editor, Sublime Text. It shows a 
+your favorite code editor, Sublime Text. It shows a
 Python file with just over one hundred thousand lines.
 
 There also seems to be a text editor window open with some
@@ -1642,9 +1708,9 @@ pointing backwards and forwards, it has something to do with time.
             prompt()
         elif in_lab == ("notes"):
             notes_examine = ("""
-The notes have 'more power' and 'add return function' on them. 
+The notes have 'more power' and 'add return function' on them.
 There are some more, but you can't quite read them as they've been crossed out.\n""")
-            for character in notes_examing:
+            for character in notes_examine:
                 sys.stdout.write(character)
                 sys.stdout.flush()
                 time.sleep(0.05)
@@ -1664,8 +1730,8 @@ with that word? It seems supernatural. Hmm....""")
         in_pbed = input("> ")
         if in_pbed == ("book"):
             book_examine = ("""
-This book used to be your Granddad's. He had finished it 10 times, 
-and now occationally reads it, but otherwise, it's yours. 
+This book used to be your Granddad's. He had finished it 10 times,
+and now occationally reads it, but otherwise, it's yours.
 """)
             for character in book_examine:
                 sys.stdout.write(character)
@@ -1676,7 +1742,7 @@ and now occationally reads it, but otherwise, it's yours.
         elif in_pbed == ("picture"):
             picture_examine = ("""
 This is a picture of your parents at the park. The sky is brown with dust, but otherwise,
-this picture is beautiful. 
+this picture is beautiful.
 
 You check the date written on the back. 2061.
 """)
@@ -1688,11 +1754,11 @@ You check the date written on the back. 2061.
             prompt()
         elif in_pbed == ("gameboy"):
             gameboy_examine = ("""
-This is an antique your father kept. It was given to him by his father, who got it 
+This is an antique your father kept. It was given to him by his father, who got it
 second-hand. The screen is scratched slightly.
 
 The cartridge inside says 'Sonic The Hedgehog'. Sonic was a character your Granddad
-always liked. 
+always liked.
 """)
             for character in gameboy_examine:
                 sys.stdout.write(character)
@@ -1704,7 +1770,7 @@ always liked.
             nintendoglass_examine = ("""
 This was your Christmas present 2 years ago. The Nintendo Glass was only a tab of glass
 and a game controller. When the button on the little tab was pressed, a holographic screen would appear,
-the size of a 2019 home flat-screen TV. 
+the size of a 2019 home flat-screen TV.
 
 The CPU of the glass tab would automatically update and get new games every day.
 
@@ -1771,7 +1837,7 @@ This is the wash basin.
 It looks clean on the inside.
 On the outside it's dusty.
 
-The faucet dates back to 2015. It has an old-fashioned handle instead 
+The faucet dates back to 2015. It has an old-fashioned handle instead
 of turning on the moment you approach it like most faucets do.
 
 There is a dish holder near the wash basin. It's covered with a piece of cloth.
@@ -1820,7 +1886,7 @@ There's nothing interesting about the chair you can find.
 def inventory_check():
     global takeable_things
     global inv_gone
-    global inv_gone2 
+    global inv_gone2
     global inv
     os.system('clear')
     print(inv)
@@ -1828,7 +1894,7 @@ def inventory_check():
 This is your inventory. Type in 'r' to return to menu screen.\n""")
     if inv_return == ("r"):
         main_loop()
-    
+
 def main_loop():
     global takeable_things
     global inv
@@ -1849,7 +1915,7 @@ Welcome to the menu screen.\n""")
 #      [r] Return to game.     #
 #    [inv] Check inventory.    #
 #    [exit] Quit the game.     #
-#   [option] Check options.    #             
+#   [option] Check options.    #
 #                              #
 ################################\n""")
     for character in menu:
@@ -1886,7 +1952,7 @@ Till next time!\n""")
                 time.sleep(0.05)
             time.sleep(3)
             sys.exit()
-    
+
 
 
 
@@ -1947,16 +2013,17 @@ Yay! I'll lead you back to the menu right away!\n""")
 
 def about():
     about_text = ("""
-Bhoom Tansirimas (aka rocketbhoom) is an 11-year-old boy who loves coding.
+Bhoom Tansirimas (aka rocketbhoom) is an 12-year-old boy who loves coding.
 He only writes Python. In his spare time, he likes to read, and listen to music.
 
 
-Note : All info written here is from the time of coding (Dec 2019).
+Note : All info written here is from the time of coding (Feb 2020).
        To download the latest version of this game, or to get
        more up-to-date information, go to :
 
+       https://github.com/rocketbhoom/fixthepast
 
-       
+
 
 
 Type in [r] to return to the menu selection screen. \n""")
@@ -2066,7 +2133,7 @@ console-looking thing.
             time.sleep(0.06)
         time.sleep(3)
         next()
-        
+
     elif working_in.lower() == ("y"):
         yes = ("""
 "Wow, really? And I thought I was being secret about it."
@@ -2085,7 +2152,7 @@ console-looking thing.
         time.sleep(3)
         next()
 
-        
+
 
 
 
@@ -2096,7 +2163,7 @@ def next():
     serious = ("""
 "Yes, I'm serious!"
 
-Your Granddad laughs. 
+Your Granddad laughs.
 
 "I've been trying this out many times. I don't anymore, though, I'm too old
 to travel back through space-time again. And ever since that epidemic occured,
@@ -2175,17 +2242,17 @@ that even I can't have created a gadget to help the world."\n\n
                 brainwave = ("""
 "Why don't we go back and prevent the disease from being created by using the time machine, Granddad?"
 
-Your Granddad looks at you. 
+Your Granddad looks at you.
 
-"I would love to do that, %s, but I'm too old to travel through time anymore. If I do, there is a 
-risk that I would die along the way."
+"I would love to do that, %s, but I'm too old to travel through time anymore. If I do, there is a
+risk that my molecular structure would get mixed up before I got there."
 
 
 
 "Then why don't I do it?"
 
 
-"It's too dangerous, %s. I wouldn't want to lose you too." 
+"It's too dangerous, %s. I wouldn't want to lose you too."
 
 
 """ % (myPlayer.name, myPlayer.name))
@@ -2249,9 +2316,9 @@ Granddad looks stressed.
                         time.sleep(4)
                         go3 = ("""
 "The time machine is to be handled carefully, it's very delicate."
-"It can only be powered by 2 quartz crystals, and can only be 
-kick-started with equipment of today, so you should mind the power. 
-If you run out of power, you would be stuck in the past." 
+"It can only be powered by 2 quartz crystals, and can only be
+kick-started with equipment of today, so you should mind the power.
+If you run out of power, you would be stuck in the past."
 
 
 Your Granddad reels that off and then looks at you.
@@ -2318,7 +2385,7 @@ Type in 't' to travel. """)
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||    
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -2374,6 +2441,15 @@ Type in 't' to travel. """)
                             time.sleep(5)
                             os.system('clear')
                             game_true()
+                elif choice_input == 'b':
+                    phew = ("""
+"Phew," your Granddad sighs. "It's a good thing you didn't want to risk your life
+on a dangerous mission like that one."
+
+You walk out of the room, feeling a little curious about that time travel device.""")
+                    myPlayer.loc = 'lab'
+                    time.sleep(5)
+                    prompt()
 
 
 
@@ -2472,7 +2548,7 @@ easier. You see the countries on the screen? These are the countries creating th
 You must use your knowledge of electronics to create a machine that will help solve the problem of these countries.
 
 
-This holo-room was designed so I could travel anywhere, but since you're using it, I used remote settings to 
+This holo-room was designed so I could travel anywhere, but since you're using it, I used remote settings to
 change it from all countries to countries affecting the climate the most.
 
 
@@ -2488,7 +2564,7 @@ You look at the screen.""" % (myPlayer.name, myPlayer.name))
             time.sleep(0.07)
         time.sleep(3)
         check()
-        
+
 
 
 def prompt_game():
@@ -2556,6 +2632,18 @@ The room whirres into action.""")
             time.sleep(1)
             southkorea()
         elif input_prompt_game == "8" or "eight" or "8.":
+            touch8 = ("""
+
+You touch 'Saudi Arabia'.
+
+The room blurres, then flashes.""")
+            for character in touch8:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.07)
+            time.sleep(2)
+            os.system('clear')
+            time.sleep(1)
             arabia()
     elif myPlayer.easy == True and myPlayer.medium == False:
         print("""
@@ -2585,7 +2673,88 @@ Countries are sorted with pollution by C02 emissions.
 
 
 Type in the number of the country you would like to go to.
+
 """ % (myPlayer.name))
+        input_prompt_game = input("> ").lower().strip()
+        if input_prompt_game == "10":
+            time.sleep(1)
+            oop = ("""
+Um, you've completed this country already. I'm not sure if you want to go back
+and waste your time. Though, if you want a status update, here's the news.
+
+
+BREAKING NEWS! Canada recieves solar power magnifier from anonymous donor.
+               Experts say it will cut down GHG (greenhouse gas) emissions
+               100%.
+
+Well, that's your news. Seems your invention is a very good one. Well done.  """)
+            for character in touch:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.05)
+            time.sleep(2)
+            os.system('clear')
+            time.sleep(1)
+            prompt_game()
+        elif input_prompt_game == "7":
+            os.system('clear')
+            touch7 = ("""
+You touch 'Iran'.
+
+The holo-room blinks and fizzles out.""")
+            for character in touch9:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.07)
+            time.sleep(2)
+            os.system('clear')
+            time.sleep(1)
+            iran()
+        elif input_prompt_game == "6":
+            touch8 = ("""
+
+You touch 'Germany'.
+
+There's a whirr, and then a click.""")
+            for character in touch8:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.07)
+            time.sleep(2)
+            os.system('clear')
+            time.sleep(1)
+            arabia()
+    elif myPlayer.easy == True and myPlayer.medium == True:
+        print("""
+{Time Machine Virtual Room}
+
+
+{Welcome, %s! This is the Virtual Room. Your chosen countries are below.}
+
+
+
+
+Countries (by most polluting first):
+
+1. China
+2. USA
+3. India - COMPLETED
+4. Russia - COMPLETED
+5. Japan - COMPLETED
+6. Germany - COMPLETED
+7. Iran - COMPLETED
+8. Saudi Arabia - COMPLETED
+9. South Korea - COMPLETED
+10. Canada - COMPLETED
+
+
+Countries are sorted with pollution by C02 emissions.
+
+
+Type in the number of the country you would like to go to.
+
+""" % (myPlayer.name))
+
 
 
 
@@ -2601,7 +2770,2041 @@ def check():
     if canada_done and korea_done and saudi_done == True:
         myPlayer.easy = True
         prompt_game()
+    if myPlayer.easy and iran_done and ger_done and japan_done and russia_done and india_done == True:
+        if message == False:
+            meanwhile_future1 = ("""
+    Meanwhile, in the future...""")
+            for character in meanwhile_future1:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.08)
+            time.sleep(3)
+            meanwhile_future2 = ("""
+    Granddad turns on his green office chair, worried.
 
+
+    He turns around to his cabinet, where he keeps a newspaper collection with sunday comics.
+    On the news, something has changed.
+
+
+    The headline is now 'Dr. John Osman invents energy generator.'
+
+
+    Granddad smiles.""")
+            for character in meanwhile_future2:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.08)
+            time.sleep(3)
+            message = True
+        else:
+            myPlayer.medium = True
+            prompt_game()
+
+def iran():
+    os.system('clear')
+    iran_text = ("""
+The time machine has transported you to Iran.
+
+Would you like to [explore] the area, or [build] the machine?
+
+""")
+    for character in iran_text:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.05)
+    iran_input = input("""> """).lower().strip()
+    if iran_input == 'explore':
+        explore_iran()
+    elif iran_input == 'build':
+        build_iran()
+
+def build_iran():
+    while energy > 0:
+        build_iran_text = ("""
+    To build a machine you must find the sources of pollution.""")
+        for character in build_iran_text:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.08)
+        build_iran_text_2 = ("""
+    You must navigate %s to the sources of pollution.\n""" % (myPlayer.name))
+        for character in build_iran_text_2:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.08)
+        time.sleep(3)
+        continue_iran = input("Enter to continue")
+        iran_game()
+def iran_game():
+    global source1
+    global source2
+    global source3
+    os.system('clear')
+    if source1 and source2 and source3 == False:
+        print("""
+You are standing in a clearing.
+
+Using soil pollution level measuring, a trail of contamination leads to the right.
+
+Which direction would you like to go?
+
+i.e. right, left, straight. OR r, l, s.\n\n""")
+        direction = input("> ").lower().strip()
+        if direction == 'right':
+            os.system('clear')
+            print("""
+You follow the trail of pollution to a intersection in the woods. The trail is getting stronger.
+
+It seems to be leading forward, but there is also slight residue leading to the right in drops.
+
+Which way would you like to go?""")
+            direction_2 = input("> ").lower().strip()
+            if direction_2 == 'forward':
+                os.system('clear')
+                print("""
+You walk along.
+
+There is a pipe here. It seems to run from a factory nearby. It's leaking and dripping into the ground.
+You seal it up, then drop a letter to the factory.
+
+Congratulations! You have found 1 source of pollution!""")
+                source1 = True
+                time.sleep(6)
+                iran_game()
+            else:
+                energy -= 1
+                print("""
+You walk along, but this doesn't seem to be the right way. The trails completely disappear after a awhile
+and you must backtrack out. 
+
+You lost one energy point. You have %d remaining.""" % (energy))
+                time.sleep(5)
+                iran_game()
+        else:
+            energy -= 1
+            print("""
+You walk along, but this doesn't seem to be the right way. The trails completely disappear after a awhile
+and you must backtrack out. 
+
+
+You lost one energy point. You have %d remaining.""" % (energy))
+            time.sleep(5)
+            iran_game()
+
+    elif source1 and source2 == True and source3 == False:
+        print("""
+The time machine has teleported you into a river. Luckily it has also built a shield bubble around you.
+
+There is a section in the water that is not as clear. Well, time to find its pollution source.
+
+
+It's leading to the left (south). Which way would you like to go? (r, l, f)
+
+
+                    N
+                    |
+            <-- W---|---E
+                    |
+                    S
+
+
+
+
+""")
+        in_source3 = input("""> """).lower().strip()
+        if in_source3 == 'l':
+            print("""
+You follow the pollution by running in your bubble shield, but the pollution is spreading.
+It's harder to tell which way it's coming from now. You think it's coming from the left (East).
+But there's also a possibility that it's coming from the right (West)
+Which way would you like to go? (r, l, f)
+
+
+                    N
+                    |
+                W---|---E
+                    |
+                    S
+                   \\/
+
+
+""")
+            in_source3 = input("""> """).lower().strip()
+            if in_source3 == 'l':
+                print("""
+It seems to be right. The pollution is getting stronger. I think you're close.
+Now it is so widespread, all directions are covered with pollution.
+The areas marked with '@' are areas with pollution.
+
+
+|-----------------------------------------------------------------------------| 
+|                                    N                                        |
+|                                                                             |
+|                                   @@@@@         @@@@@@@                     |
+|                                                     @@@@@   @@@@@@          |
+|W     @@@@@@@@@@@@@@@@@@                        @@@@@@@@@@@@@@@@@@@@@@@@@@@@E|
+|      @@@@@@@@@@@@            @@@@@      @@@@@@@@     @@@@@@@@@@             |
+|                                                                             |
+|                                      @@                                     |
+|                                    S                                        |
+|-----------------------------------------------------------------------------|
+
+Where do you think the pollution is coming from?
+
+(n/w/s/e)
+
+""")
+                in_source3 = input("""> """)
+                if in_source == 'e':
+                    print("""
+Congratulations! You have found the source of water pollution. It's coming from the outlet pipe of a factory.
+From the bubble shield, you invent a water purifier that doesn't require any filters and can be used forever. 
+You implant it on the outlet pipe, and the water that rushes out is not polluted anymore. You then drop 
+another letter, to the factory once you've gotten out, and your job is done!
+
+
+You have completed this country.\n""")
+                    iran_continue = input("""Enter to continue""")
+                    iran_done = True
+                    prompt_game()
+
+    elif source1 == True and source2 and source3 == False:
+        print("""
+You walk out of the woods, and go out, only to find yourself in another clearing. It's a different one.
+Don't worry about getting out, the time machine can do that. Just find the sources of pollution and see.
+
+
+
+There is no visible trail of soil pollution. However, the air pollution is quite high. There is smog 
+coming from a certain direction. You check your compass. North.
+
+
+You are facing west. Which way do you go? [r]ight, [l]eft, or [f]orward?
+
+
+                    N
+                    |
+            <-- W---|---E
+                    |
+                    S
+                        
+""")
+        in_source2 = input("> ").strip().lower()
+        if in_source2 == 'r':
+            print("""
+Correct! You follow the smog rising from a chimney. You are now facing north, but you seem to have gone too far.
+The smog is now rising from the east. Which way do you go?
+
+                    ^
+                    |
+                         
+                    N
+                    |
+                W---|---E
+                    |
+                    S
+""")
+            in_source22 = input("> ").strip().lower()
+            if in_source22 == 'r':
+                print("""
+You found the source of pollution! It's coming from a factory chimney. You use the time machine to teleport
+yourself up there and put a filter over the chimney. Should last for a year. After you get down, you leave a letter
+at their mailbox and a parcel with the energy generator from Saudi Arabia.
+
+Good job! You found the 2nd source of pollution!""")
+                time.sleep(6)
+                source2 = True
+                iran_game()
+            else:
+                energy -= 1
+                print("""
+You walk along, but this doesn't seem to be the right way. The smoke completely disappear after a awhile
+and you must backtrack out. 
+
+
+You lost one energy point. You have %d remaining.""" % (energy))
+                time.sleep(5)
+                iran_game()
+        else:
+            energy -= 1
+            print("""
+You walk along, but this doesn't seem to be the right way. The smoke completely disappear after a awhile
+and you must backtrack out. 
+
+
+You lost one energy point. You have %d remaining.""" % (energy))
+            time.sleep(5)
+            iran_game()
+
+
+
+
+def germany():
+    germany_text = ("""
+You are in Germany. A soft breeze blows.
+
+
+Would you like to [explore] the area or [help] the country?
+
+""")
+    for character in germany_text:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.05)
+    in_ger = input("> ")
+    if in_ger == 'explore':
+        ger_explore = ("""
+You seem to be in Rhineland, a town in Germany that has many coal plants.
+
+Would you like to explore the [water] or go [back]?\n\n\n""")
+        for character in ger_explore:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.05)
+        input_ger_explore = input("> ")
+        if input_ger_explore == 'water':
+            ger_explore_water = ("""
+There is a puddle nearby. Looks like it just rained.
+
+Wow, this water is acidic! It must be acid rain from the coal plants.""")
+            for character in ger_explore_water:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.05)
+            time.sleep(4)
+            germany()
+        elif input_ger_explore == 'back':
+            germany()
+    elif in_ger == 'help':
+        help_ger()
+
+def help_ger():
+    global energy
+    os.system('clear')
+    build_germany = ("""
+To help the country, you must find an alternative to coal power. Follow the trail of coal left from the
+trucks to the plant, then see if you can invent something.
+
+You have limited energy, so if you do something wrong, it'll cost you a lot.\n\n\n""")
+    continue_ger = input("Enter to continue")
+    cprint("Start.", "green")
+    energy = 10
+    ger_game()
+
+
+level = 1
+def ger_game():
+    global energy
+    os.system('clear')
+    while energy > 0:
+        if level == 1:
+            print("""
+You don't seem to know where to go, but the time machine does. It just needs you to
+answer a question, because the sattelites connected to the machine near Germany don't 
+exist yet.
+
+
+
+{Where are we?} 
+{Please enter a city or town name}
+
+""")
+            input_machine = input("""> """).lower().strip()
+            if input_machine == 'rineland' or 'rhineland' or 'rignland':
+                print("""
+Correct! The machine clicks and leads you for a little bit, but then fails to use the modern GPS.
+Well, you're on your own now. There are bits of black rock on the street. Hmm... Rhineland has many plants,
+but what type are they? [c]oal plants, [n]uclear plants, or [w]ind power plants?\n\n""")
+                input_machine = input("> ").lower().strip()
+                if input_machine == 'c':
+                    print("""
+You're correct again! You follow the trails until they disappear completely. Now what? You didn't bring
+your German translator. But you have the time machine...
+
+It's still on the fritz. It cannot locate you. But it can translate. It just needs a language.
+
+Enter a language into the time machine.\n\n""")
+                    input_machine = input("""> """).lower().strip()
+                    if input_machine == 'german':
+                        print("""
+You translate the sign. 
+
+'Coal Plant : 20 kilometers.'
+
+That's quite far. You could use the time machine to teleport, but it cannot locate you. You could end 
+up in Thailand if you tried it.
+
+It might need a continent to check as well. Enter the continent Germany is located in.
+\n""")
+                        input_machine = input("""> """).lower().strip()
+                        if input_machine == 'europe':
+                            print("""
+Now it works. It teleports you to the coal plant. Hooray!\n\n""")
+                            input_continue = input("enter to continue")
+                            level = 2
+                            ger_game()
+                        else:
+                            print("""
+Hmm... That didn't seem right. As you enter it, the machine doesn't agree and teleports you back where you
+started. Too bad.""")
+                            time.sleep(5)
+                            energy -= 1
+                            ger_game()
+                    else:
+                        print("""
+Um, that's probably not German. The time machine was not able to translate, and glitched, causing it to teleport
+you back to where you started. Too bad.""")
+                        energy -= 1
+                        ger_game()
+            else:
+                os.system('clear')
+                print("""
+Hmm, that doesn't seem to be right. Are we even in Germany?""")
+                time.sleep(4)
+                energy -= 1
+                ger_game()
+        if level == 2:
+            if energy > 5:
+                os.system('clear')
+                print("""
+You have reached the coal mine!
+
+Your energy : %d
+
+You were able to think up a small portable wind power generator and left it at the front door of 
+the coal plant, with a note to the workers to use the machine to produce power instead of using the
+plant. Good job! You've completed this country""" % (energy))
+                ger_done == True
+            elif energy < 5:
+                os.system('clear')
+                print("""
+You have reached the coal mine!
+
+Your energy : %d
+
+You weren't able to think up an idea for the machine to produce power, because you were so tired.
+Too bad, you failed.""" % (energy))
+                time.sleep(7)
+                prompt_game()
+def explore_iran():
+    os.system('clear')
+    iran_explore = ("""
+What would you like to examine first? The [air], or the [water] in the lake nearby?
+Or would you like to go [back]?
+
+""")
+    for character in iran_explore:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.05)
+    in_explore_iran = input("> ").lower().strip()
+    if in_explore_iran == 'air':
+        air_iran = ("""
+Well, I'll be. The air pollution here is very high. You've read before that most of the 
+air pollution here is caused by transportation, not factories.""")
+        for character in air_iran:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.05)
+        time.sleep(3)
+        explore_iran()
+    elif in_explore_iran == 'water':
+        water_iran = ("""
+The water is contaminated. You probably shouldn't drink that. The pollution comes from wastewater runoff.""")
+        for character in water_iran:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.05)
+        time.sleep(3)
+        explore_iran()
+    elif in_explore_iran == 'back':
+        iran()
+def arabia():
+    os.system('clear')
+    arabia_text = ("""
+You are in Saudi Arabia.
+
+Some sand blows by. It's quite dusty.
+
+Would you like to [explore] the area, or [build] the machine?""")
+    for character in arabia_text:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.05)
+    arabia_input = input("> ").lower().strip()
+    if arabia_input == 'explore':
+        explore_arabia()
+    elif arabia_input == 'build':
+        build_arabia()
+def build_arabia():
+    os.system('clear')
+    build_arabia_text = ("""
+To build a machine you must know how to connect the circuits properly.\n\n""")
+    for character in build_arabia_text:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.09)
+    time.sleep(3)
+    inputty = input(colored("Enter to continue", "red"))
+    os.system('clear')
+    print("""
+HOW TO PLAY:
+
+Type in 'move', wait for the prompt, then type in the coordinates of the wire you would 
+like to move. (please note: do not make any spaces in your coordinate commands, the program may
+fail.)
+
+Just enter the coordinates, the time machine will correct the wires. 
+If the program tells you that you touched a wrong wire, it means you're not meant to move that one or
+it just doesn't exist.
+
+Zero (0) represents the map area.
+One (1) represents a movable piece.
+Four (4) represents an immovable piece. Never attempt to move these, you'll just end up electrocuting
+yourself. 
+
+
+
+Please adjust the wires layer-by-layer, as not to break the game.
+
+                                       +
+Move the wires to connect the 'plus' + + +
+                                       +
+
+To the 'minus' -----
+
+
+
+                        000
+                      0     0
+                       0   0
+                        000
+                        | |
+Through the 'lightbulb' \\/
+
+
+""")
+    time.sleep(5)                                   
+    inputty = input(colored("Enter to start", "red"))
+    os.system('clear')
+
+    circuit_builder()
+
+
+
+def circuit_builder():
+    global map_electric
+    global a1
+    global a2
+    global a3
+    global a4
+    global a5
+    global b1
+    global b2
+    global b3
+    global b4
+    global b5
+    global c1
+    global c2
+    global c3
+    global c4
+    global c5
+    global d1
+    global d2
+    global d3
+    global d4
+    global d5
+    os.system('clear')
+    print(map_electric)
+    print("""
+What would you like to do? (move/reset)\n\n""")
+    input_arabia_main = input("""> """)
+    if input_arabia_main == 'move':
+        os.system('clear')
+        print("""
+Which coordinate would you like to move?
+Answer in coordinates (i.e. c3, d2)
+""")
+        coordinate_in_arabia = input("> ")
+        if coordinate_in_arabia == 'a1':
+            print("Circuit coordinate : A-1 corrected.")
+            a1 = True
+            time.sleep(3)
+            if a2 == False:
+                map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111111   1                                     +      0
+       A        0  1       1   1        4444444444444444444444444  + + +    0
+                0  1       1   1        4                            +      0
+                0  1           1                                            0
+                0--1------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111                                                 0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  1        44444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  444444444 111111111                                  4   0
+                0  4         1                                          4   0
+                0  4         1                                          4   0
+                0  4         1       444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+                circuit_builder()
+
+            elif a2 == True:
+                map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111111                                         +      0
+       A        0  1       1            4444444444444444444444444  + + +    0
+                0  1       11111111111114                            +      0
+                0  1                                                        0
+                0--1------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111                                                 0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  1        44444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  444444444 111111111                                  4   0
+                0  4         1                                          4   0
+                0  4         1                                          4   0
+                0  4         1       444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+                circuit_builder()
+
+        elif coordinate_in_arabia == 'a2':
+            print("Circuit coordinate : A-2 corrected.")
+            a2 = True
+            time.sleep(3)
+            if a1 == False:
+                map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111                                            +      0
+       A        0  1                    4444444444444444444444444  + + +    0
+                0  1        1111111111114                            +      0
+                0  11111111                                                 0
+                0---------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111                                                 0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  1        44444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  444444444 111111111                                  4   0
+                0  4         1                                          4   0
+                0  4         1                                          4   0
+                0  4         1       444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+                circuit_builder()
+
+            elif a1 == True:
+                map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111111                                         +      0
+       A        0  1       1            4444444444444444444444444  + + +    0
+                0  1       11111111111114                            +      0
+                0  1                                                        0
+                0--1------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111                                                 0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  1        44444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  444444444 111111111                                  4   0
+                0  4         1                                          4   0
+                0  4         1                                          4   0
+                0  4         1       444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+                circuit_builder()
+
+
+        elif coordinate_in_arabia == 'a3':
+            print("""\nOops! You seem to have touched a wrong wire. You get electrocuted, but it isn't fatal.
+During the shock though, you seem to have batted away the other wires. You're gonna have to start over again.""")
+            time.sleep(6)
+            map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111      1                                     +      0
+       A        0  1           1        4444444444444444444444444  + + +    0
+                0  1           1        4                            +      0
+                0  11111111    1                                            0
+                0---------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111                                                 0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  1        44444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  444444444 111111111                                  4   0
+                0  4         1                                          4   0
+                0  4         1                                          4   0
+                0  4         1       444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+            circuit_builder()
+
+        elif coordinate_in_arabia == 'a4':
+            print("""\nOops! You seem to have touched a wrong wire. You get electrocuted, but it isn't fatal.
+During the shock though, you seem to have batted away the other wires. You're gonna have to start over again.""")
+            time.sleep(6)
+            map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111      1                                     +      0
+       A        0  1           1        4444444444444444444444444  + + +    0
+                0  1           1        4                            +      0
+                0  11111111    1                                            0
+                0---------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111                                                 0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  1        44444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  444444444 111111111                                  4   0
+                0  4         1                                          4   0
+                0  4         1                                          4   0
+                0  4         1       444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+            circuit_builder()
+        elif coordinate_in_arabia == 'a5':
+            print("""\nOops! You seem to have touched a wrong wire. You get electrocuted, but it isn't fatal.
+During the shock though, you seem to have batted away the other wires. You're gonna have to start over again.""")
+            time.sleep(6)
+            map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111      1                                     +      0
+       A        0  1           1        4444444444444444444444444  + + +    0
+                0  1           1        4                            +      0
+                0  11111111    1                                            0
+                0---------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111                                                 0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  1        44444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  444444444 111111111                                  4   0
+                0  4         1                                          4   0
+                0  4         1                                          4   0
+                0  4         1       444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+            circuit_builder()
+
+
+        elif coordinate_in_arabia == 'b2':
+            print("""\nOops! You seem to have touched a wrong wire. You get electrocuted, but it isn't fatal.
+During the shock though, you seem to have batted away the other wires. You're gonna have to start over again.""")
+            time.sleep(6)
+            map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111      1                                     +      0
+       A        0  1           1        4444444444444444444444444  + + +    0
+                0  1           1        4                            +      0
+                0  11111111    1                                            0
+                0---------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111                                                 0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  1        44444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  444444444 111111111                                  4   0
+                0  4         1                                          4   0
+                0  4         1                                          4   0
+                0  4         1       444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+            circuit_builder()
+        elif coordinate_in_arabia == 'b3':
+            print("""\nOops! You seem to have touched a wrong wire. You get electrocuted, but it isn't fatal.
+During the shock though, you seem to have batted away the other wires. You're gonna have to start over again.""")
+            time.sleep(6)
+            map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111      1                                     +      0
+       A        0  1           1        4444444444444444444444444  + + +    0
+                0  1           1        4                            +      0
+                0  11111111    1                                            0
+                0---------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111                                                 0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  1        44444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  444444444 111111111                                  4   0
+                0  4         1                                          4   0
+                0  4         1                                          4   0
+                0  4         1       444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+            circuit_builder()
+        elif coordinate_in_arabia == 'b4':
+            print("""\nOops! You seem to have touched a wrong wire. You get electrocuted, but it isn't fatal.
+During the shock though, you seem to have batted away the other wires. You're gonna have to start over again.""")
+            time.sleep(6)
+            map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111      1                                     +      0
+       A        0  1           1        4444444444444444444444444  + + +    0
+                0  1           1        4                            +      0
+                0  11111111    1                                            0
+                0---------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111                                                 0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  1        44444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  444444444 111111111                                  4   0
+                0  4         1                                          4   0
+                0  4         1                                          4   0
+                0  4         1       444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+            circuit_builder()
+        elif coordinate_in_arabia == 'b5':
+            print("""\nOops! You seem to have touched a wrong wire. You get electrocuted, but it isn't fatal.
+During the shock though, you seem to have batted away the other wires. You're gonna have to start over again.""")
+            time.sleep(6)
+            map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111      1                                     +      0
+       A        0  1           1        4444444444444444444444444  + + +    0
+                0  1           1        4                            +      0
+                0  11111111    1                                            0
+                0---------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111                                                 0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  1        44444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  444444444 111111111                                  4   0
+                0  4         1                                          4   0
+                0  4         1                                          4   0
+                0  4         1       444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+            circuit_builder()
+        elif coordinate_in_arabia == 'c1':
+            print("""Circuit coordinate : C-1 corrected. """)
+            c1 = True
+            time.sleep(3)
+            if a1 == True:
+                map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111111   1                                     +      0
+       A        0  1       1   1        4444444444444444444444444  + + +    0
+                0  1       1   1        4                            +      0
+                0  1           1                                            0
+                0--1------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0--1------------------------------------------------------- 0
+                0  1                                                        0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  11111111144444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  444444444 111111111                                  4   0
+                0  4         1                                          4   0
+                0  4         1                                          4   0
+                0  4         1       444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+            if a1 and a2 == True:
+                map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111111                                         +      0
+       A        0  1       1            4444444444444444444444444  + + +    0
+                0  1       11111111111114                            +      0
+                0  1                                                        0
+                0--1------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0--1------------------------------------------------------- 0
+                0  1                                                        0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  11111111144444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  444444444 111111111                                  4   0
+                0  4         1                                          4   0
+                0  4         1                                          4   0
+                0  4         1       444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+                circuit_builder()
+
+        elif coordinate_in_arabia == 'c2':
+            print("""\nOops! You seem to have touched a wrong wire. You get electrocuted, but it isn't fatal.
+During the shock though, you seem to have batted away the other wires. You're gonna have to start over again.""")
+            time.sleep(6)
+            map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111      1                                     +      0
+       A        0  1           1        4444444444444444444444444  + + +    0
+                0  1           1        4                            +      0
+                0  11111111    1                                            0
+                0---------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111                                                 0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  1        44444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  444444444 111111111                                  4   0
+                0  4         1                                          4   0
+                0  4         1                                          4   0
+                0  4         1       444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+            circuit_builder()
+        elif coordinate_in_arabia == 'c3':
+            print("""\nOops! You seem to have touched a wrong wire. You get electrocuted, but it isn't fatal.
+During the shock though, you seem to have batted away the other wires. You're gonna have to start over again.""")
+            time.sleep(6)
+            map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111      1                                     +      0
+       A        0  1           1        4444444444444444444444444  + + +    0
+                0  1           1        4                            +      0
+                0  11111111    1                                            0
+                0---------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111                                                 0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  1        44444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  444444444 111111111                                  4   0
+                0  4         1                                          4   0
+                0  4         1                                          4   0
+                0  4         1       444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+            circuit_builder()
+        elif coordinate_in_arabia == 'c4':
+            print("""\nOops! You seem to have touched a wrong wire. You get electrocuted, but it isn't fatal.
+During the shock though, you seem to have batted away the other wires. You're gonna have to start over again.""")
+            time.sleep(6)
+            map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111      1                                     +      0
+       A        0  1           1        4444444444444444444444444  + + +    0
+                0  1           1        4                            +      0
+                0  11111111    1                                            0
+                0---------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111                                                 0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  1        44444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  444444444 111111111                                  4   0
+                0  4         1                                          4   0
+                0  4         1                                          4   0
+                0  4         1       444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+            circuit_builder()
+        elif coordinate_in_arabia == 'c5':
+            print("""\nOops! You seem to have touched a wrong wire. You get electrocuted, but it isn't fatal.
+During the shock though, you seem to have batted away the other wires. You're gonna have to start over again.""")
+            time.sleep(6)
+            map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111      1                                     +      0
+       A        0  1           1        4444444444444444444444444  + + +    0
+                0  1           1        4                            +      0
+                0  11111111    1                                            0
+                0---------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111                                                 0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  1        44444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  444444444 111111111                                  4   0
+                0  4         1                                          4   0
+                0  4         1                                          4   0
+                0  4         1       444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+            circuit_builder()
+        elif coordinate_in_arabia == 'd1':
+            print("""\nOops! You seem to have touched a wrong wire. You get electrocuted, but it isn't fatal.
+During the shock though, you seem to have batted away the other wires. You're gonna have to start over again.""")
+            time.sleep(6)
+            map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111      1                                     +      0
+       A        0  1           1        4444444444444444444444444  + + +    0
+                0  1           1        4                            +      0
+                0  11111111    1                                            0
+                0---------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111                                                 0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  1        44444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  444444444 111111111                                  4   0
+                0  4         1                                          4   0
+                0  4         1                                          4   0
+                0  4         1       444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+            circuit_builder()
+        elif coordinate_in_arabia == 'd2':
+            print("Circuit coordinate : D-2 corrected")
+            time.sleep(3)
+            if a1 == True:
+                map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111111   1                                     +      0
+       A        0  1       1   1        4444444444444444444444444  + + +    0
+                0  1       1   1        4                            +      0
+                0  1           1                                            0
+                0--1------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111                                                 0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  1        44444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  4444444441111111111                                  4   0
+                0  4                 1                                  4   0
+                0  4                 1                                  4   0
+                0  4                 444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+                circuit_builder()
+            if a2 == True:
+                map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111                                            +      0
+       A        0  1                    4444444444444444444444444  + + +    0
+                0  1        1111111111114                            +      0
+                0  11111111                                                 0
+                0---------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111                                                 0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  1        44444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  4444444441111111111                                  4   0
+                0  4                 1                                  4   0
+                0  4                 1                                  4   0
+                0  4                 444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+                circuit_builder()
+            if a1 and a2 == True:
+                map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111111                                         +      0
+       A        0  1       1            4444444444444444444444444  + + +    0
+                0  1       11111111111114                            +      0
+                0  1                                                        0
+                0--1------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111                                                 0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  1        44444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0                              44444444444444444444444444   0
+                0  4444444441111111111                                  4   0
+                0  4                 1                                  4   0
+                0  4                 1                                  4   0
+                0  4                 444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+                circuit_builder()
+            if c1 == True:
+                map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111      1                                     +      0
+       A        0  1           1        4444444444444444444444444  + + +    0
+                0  1           1        4                            +      0
+                0  11111111    1                                            0
+                0---------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0--1------------------------------------------------------- 0
+                0  1                                                        0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  11111111144444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  4444444441111111111                                  4   0
+                0  4                 1                                  4   0
+                0  4                 1                                  4   0
+                0  4                 444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+                circuit_builder()
+            if c1 and a1 and a2 == True:
+                map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111111                                         +      0
+       A        0  1       1            4444444444444444444444444  + + +    0
+                0  1       11111111111114                            +      0
+                0  1                                                        0
+                0--1------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  1                                                        0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  11111111144444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0                              44444444444444444444444444   0
+                0  4444444441111111111                                  4   0
+                0  4                 1                                  4   0
+                0  4                 1                                  4   0
+                0  4                 444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+                arabia_results()
+
+
+
+
+
+
+
+        elif coordinate_in_arabia == 'd3':
+            print("""\nOops! You seem to have touched a wrong wire. You get electrocuted, but it isn't fatal.
+During the shock though, you seem to have batted away the other wires. You're gonna have to start over again.""")
+            time.sleep(6)
+            map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111      1                                     +      0
+       A        0  1           1        4444444444444444444444444  + + +    0
+                0  1           1        4                            +      0
+                0  11111111    1                                            0
+                0---------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111                                                 0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  1        44444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  444444444 111111111                                  4   0
+                0  4         1                                          4   0
+                0  4         1                                          4   0
+                0  4         1       444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+            circuit_builder()
+        elif coordinate_in_arabia == 'd4':
+            print("""\nOops! You seem to have touched a wrong wire. You get electrocuted, but it isn't fatal.
+During the shock though, you seem to have batted away the other wires. You're gonna have to start over again.""")
+            time.sleep(6)
+            map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111      1                                     +      0
+       A        0  1           1        4444444444444444444444444  + + +    0
+                0  1           1        4                            +      0
+                0  11111111    1                                            0
+                0---------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111                                                 0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  1        44444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  444444444 111111111                                  4   0
+                0  4         1                                          4   0
+                0  4         1                                          4   0
+                0  4         1       444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+            circuit_builder()
+        elif coordinate_in_arabia == 'd5':
+            print("""\nOops! You seem to have touched a wrong wire. You get electrocuted, but it isn't fatal.
+During the shock though, you seem to have batted away the other wires. You're gonna have to start over again.""")
+            time.sleep(6)
+            map_electric = ("""
+
+
+
+                    1          2           3            4           5      
+
+                0000000000000000000000000000000000000000000000000000000000000
+                0  111111      1                                     +      0
+       A        0  1           1        4444444444444444444444444  + + +    0
+                0  1           1        4                            +      0
+                0  11111111    1                                            0
+                0---------------------------------------------------------- 0
+                0  4                                                        0
+                0  4                                                        0
+       B        0  4                                                        0
+                0  4                                                        0
+                0---------------------------------------------------------- 0
+                0  11111111                                                 0
+                0  1                                                        0
+       C        0  1                                                        0
+                0  1        44444444444444444444                            0
+                0------------------------------4--------------------------- 0
+                0                              44444444444444444444444444   0
+                0  444444444 111111111                                  4   0
+                0  4         1                                          4   0
+                0  4         1                                          4   0
+                0  4         1       444            000                 4   0
+       D        0  4                   4           0   0                4   0
+                0  4                   4            000                 4   0
+                0  4                   4444444444444| |444444444444444444   0
+                0  4                                \\/                      0
+                0  -----                                                    0
+                0                                                           0
+                0000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+""")
+            circuit_builder()
+
+
+
+
+
+
+
+def arabia_results():
+    global mrjohn_yes
+    results_arabia = ("""
+You have completed the circuit! The light bulb glows, and that means your new power source alternative
+works. Now, to find someone to present it to.""")
+    for character in results_arabia:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.05)
+    time.sleep(3)
+    if mrjohn_yes == False:
+        results_arabia2 == ("""
+Hmm... Maybe explore the city, then see if you can find anyone...
+
+Once you think you've found the right person, simply type [present] into the Saudi Arabia main menu.
+(This will not show as an option, but it will work.)\n\n\n""")
+        for character in results_arabia2:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.05)
+        time.sleep(4)
+        arabia()
+    elif mrjohn_yes == True:
+        arabia_results2()
+
+def arabia_results2():
+    if mrjohn_yes == True:
+        results_arabia2 = ("""
+Hmm... What about Mr. John?
+
+That seems like a good idea. Let's call him.
+
+You check the time machine. As usual, it doesn't disappoint you. A phone icon pops up with a loading bar.
+
+Enter to continue.""")
+        for character in results_arabia2:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.06)
+        continue_arabia = input("")
+        results_arabia4 = ("""
+'Please enter the number you would like to call.' says the time machine.
+
+
+[look] at Mr. John's business card, or [enter] a number.\n""")
+        print(results_arabia4)
+        input_phone = input(">")
+        if input_phone == 'look':
+            business_card = ("""
+|------------------------------------------------| 
+|                                                |
+|               John Osman, PhD.                 |
+|                                                |
+|      Mechanical engineering professor at       |
+|           King Abdulaziz University.           |
+|                                                |
+|                012-124-5268                    |
+|------------------------------------------------|
+
+
+               [enter] to exit""")
+            input_business = input("")
+            os.system('clear')
+            print(results_arabia4)
+            input_phone = input(">")
+            if input_phone == 'enter':
+                phone = ("""
+Enter the phone number you wish to call (without dashes)""")
+                for character in phone:
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                    time.sleep(0.05)
+                phone_in = input("> ")
+                if phone_in == '0121245268':
+                    mrjohn = ("""
+"Hello, this is John Osman speaking. Who is this?"
+
+"Hello, Mr. John! It's me, %s!"
+
+"Ah, hello, %s! What are you calling for?"
+
+
+"I was wondering if you can do me a favor, Mr. John."
+
+
+
+"Of course. What would it be?"
+
+"Could you tell the other teachers about the energy generator prototype that I made?"
+
+
+
+
+
+
+"You made an energy generator?"
+
+
+"Yes, Mr. John."
+
+"Does it use up any resources?"
+
+"No, sir."
+
+
+
+
+"But... There's no such thing as a non-resource energy generator. You invented it?"
+
+"Yes, sir."
+
+"Okay... Where can I pick it up? I may need the real thing."
+
+"Can I mail it to you? Express mailing, maybe?"
+
+"Sure."
+
+
+Mr. John has ended the call.""" % (myPlayer.name, myPlayer.name))
+                    for character in mrjohn:
+                        sys.stdout.write(character)
+                        sys.stdout.flush()
+                        time.sleep(0.07)
+                    time.sleep(3)
+                    os.system('clear')
+                    wait_arabia = ("""
+You send the generator and wait for the response from Mr. John.
+
+He calls you at 4 PM.
+
+
+"%s, this energy generator is nothing like I've ever seen. I've showed it to the other professors
+and they all agree that this is like a miracle of engineering. You really must attend our college when you grow up."
+
+"Sorry, Mr. John, but I don't live here. I live in America."
+
+"... Well, that's too bad. But maybe when you grow up, then. By the way, may I take your project and present it to 
+the government?"
+
+"Of course, sir."
+
+"Well, good luck on your path, %s. I hope that we can meet again."
+
+
+
+Mr. John has ended the call.
+
+
+You have completed this country.""")
+                    for character in wait_arabia:
+                        sys.stdout.write(character)
+                        sys.stdout.flush()
+                        time.sleep(0.07)
+                    time.sleep(5)
+                    saudi_done = True
+                    prompt_game()
+
+
+def explore_arabia():
+    global mrjohn_yes
+    explore_arabia1 = ("""
+Some sand blows right onto the screen of your handheld time machine.
+
+You wipe it off.
+
+From your surroundings, you seem to be around the outskirts of Riyadh,
+Saudi Arabia's capital. No problem traveling to the city to get supplies, then.
+
+Would you like to examine the [soil] nearby, go to the [city], or go [back]?""")
+    for character in explore_arabia1:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.05)
+    input_explorearabia1 = input("> ").lower().strip()
+    if input_explorearabia1 == 'soil':
+        soil_arabia = ("""
+As soon as you bring the time machine near the soil hoping for it to be able to scan it from there,
+an apparatus extends out from the machine. It goes into the soil.
+
+From the readings it seems that there is a lot of oil contamination here. Hmm...""")
+        for character in soil_arabia:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.07)
+        time.sleep(5)
+        explore_arabia()
+    elif input_explorearabia1 == 'city':
+        city_arabia = ("""
+You walk to a nearby farm, where you catch a taxi and go to the city. The driver seems confused when you
+hand him your holo-coins, but accepts them.
+
+Now, time to ask some locals.
+
+Enter to continue.\n\n\n""")
+        for character in city_arabia:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.05)
+        continue_arabia = input("")
+        if myPlayer.gen == "boy":
+            nickname = ", young man"
+        elif myPlayer.gen == 'girl':
+            nickname = ", little girl"
+        elif myPlayer.gen == 'child':
+            nickname = ''
+        city_arabia2 = ("""
+
+There is a nice-looking man nearby. You strike up a conversation. Hopefully he can speak English.
+
+"Well, hello there%s! What brings you here?" He replies in a friendly manner.
+
+
+[a] - "Oh, nothing. Just traveling, sir. I wanted to meet some of the locals here."
+[b] - "I'm looking for some locals to answer some of my questions, sir."
+
+""" % (nickname))
+        for character in city_arabia2:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.05)
+        input_city_arabia = input("> ").lower().strip()
+        if input_city_arabia == 'a':
+            city_arabia_a = ("""
+"That's nice. Well, my name is Mr. John. What's yours?"
+
+"%s, sir. Say, will you answer some questions for me, Mr. John?"
+
+"Of course!"
+
+
+Enter to continue. \n\n\n\n""" % (myPlayer.name))
+            for character in city_arabia_a:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.06)
+            city_arabia_cont = input("")
+            city_arabia_a2 = ("""
+"Well, Mr. John, I've heard that this country has met some deadly environmental hazards and
+damages the environment a lot as well, by producing oil. Is that true?"
+
+Mr. John darkens.
+
+"Well, not to insult my country in any way, but it is true. Getting most of our energy from
+oil is... Well, inefficient." Mr. John says. "It also damages the environment. I wish we
+had an alternative, but there is nothing else right now."
+
+ """)
+            for character in city_arabia_a2:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.08)
+            time.sleep(3)
+            city_arabia_end = ("""
+A bus arrives.
+
+
+"Well, that's my bus! It was nice chatting to you, %s."
+
+He hands you a card.
+
+"This is my business card. Whenever you need me, just call, okay?"
+
+
+He hurries off.
+
+""" % (myPlayer.name))
+            for character in city_arabia_end:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.05)
+            time.sleep(3)
+            explore_arabia()
+        elif input_city_arabia == 'b':
+            city_arabia_b = ("""
+"Well, I'm a local, so ask away! My name is Mr. John. What's yours?"
+
+"%s, sir."
+
+"Nice to meet you, %s! Now, what do you want to ask me?"
+
+
+Enter to continue. \n\n\n\n""" % (myPlayer.name, myPlayer.name))
+            for character in city_arabia_b:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.06)
+            city_arabia_cont = input("")
+            city_arabia_b2 = ("""
+"Well, Mr. John, I've heard that this country has met some deadly environmental hazards and
+damages the environment a lot as well, by producing oil. Is that true?"
+
+Mr. John darkens.
+
+"Well, not to insult my country in any way, but it is true. Getting most of our energy from
+oil is... Well, inefficient." Mr. John says. "It also damages the environment. I wish we
+had an alternative, but there is nothing else right now."
+
+ """)
+            for character in city_arabia_b2:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.08)
+            time.sleep(3)
+            city_arabia_endb = ("""
+A bus arrives.
+
+
+"Well, that's my bus! It was nice chatting to you, %s."
+
+He hands you a card.
+
+"This is my business card. Whenever you need me, just call, okay?"
+
+
+He hurries off.
+
+""" % (myPlayer.name))
+            for character in city_arabia_endb:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.05)
+            time.sleep(3)
+            mrjohn_yes = True
+            explore_arabia()
+
+
+    elif input_explorearabia1 == 'back':
+        arabia()
 
 
 def southkorea():
@@ -2656,7 +4859,7 @@ To build a machine you must have data of the environment.""")
         sys.stdout.flush()
         time.sleep(0.1)
     time.sleep(2)
-    pm25in1 = input("\nEnter to continue")
+    pm25in1 = input(colored("\nEnter to continue", "red", attrs=['bold']))
     os.system('clear')
     pm252 = ("""
 You must click when you see a PM 2.5 dust piece.""")
@@ -2664,7 +4867,7 @@ You must click when you see a PM 2.5 dust piece.""")
         sys.stdout.write(character)
         sys.stdout.flush()
         time.sleep(0.08)
-    pm25in2 = input("\nEnter to start")
+    pm25in2 = input(colored("\nEnter to start", "red", attrs=['bold']))
     os.system('clear')
     cprint("Game starts in 5", "red", attrs=['bold'])
     time.sleep(1)
@@ -2688,17 +4891,16 @@ You must click when you see a PM 2.5 dust piece.""")
     curses.wrapper(korea_clicker_game)
 
 
+
 def korea_clicker_game(stdscr):
+    global pm25_points, pm25_time, pm25_outof
     stdscr.clear()
     curses.curs_set(0)
     curses.mousemask(1)
-    pm25_points = 0
-    pm25_time = 10
-    while pm25_time > 0:
-        time.sleep(3)
+    while pm25_time < 7:
         value = randint(0, 1)
         if value == 0:
-            stdscr.addstr(9, 0, """
+            stdscr.addstr(0, 0, """
         ______________________________________________________
         |                                                    |
         |               Laser particle sensor                |
@@ -2722,34 +4924,118 @@ def korea_clicker_game(stdscr):
             time.sleep(3)
             curses.wrapper(korea_clicker_game)
         elif value == 1:
-            stdscr.addstr(9, 0, """
+            stdscr.addstr(0, 0, """
         ______________________________________________________
         |                                                    |
         |               Laser particle sensor                |
         |                                                    |
         |                                                    |
-        |                                                    |
-        |                   __________                       |
-        |                  |  PM 2.5  |                      |
-        |                  |          |                      |
-        |                  |          |                      |
-        |                  |  Alert!  |                      |
-        |                  |__________|                      |
+        |                   _______                          |
+        |                  /       \\                       <-|
+        |                  | PM2.5 |                         |
+        |                  \\_______/                       <-|
         |                                                    |
         |                                                    |
         |                                                    |
         |                                                    |
+        |                                                    |
+        |                                                    |
+        |                   PM 2.5 Alert!                    |
         |                                                    |
         |____________________________________________________|
 
-""")    
+""")
             key = stdscr.getch()
             if key == curses.KEY_MOUSE:
                 _, x, y, _, _ = curses.getmouse()
                 if y in range(9, 18) and x in range(4, 54):
                     pm25_points += 1
-                    pm25_time -= 1
+                    pm25_time += 0.5
+                    stdscr.clear()
+                    stdscr.addstr(0,0, "Sample collected: Time %d" % (pm25_time))
                     curses.wrapper(korea_clicker_game)
+            else:
+                pm25_time += 0.5
+                pm25_outof -= 1
+    korea_results()
+def korea_results():
+    global pm25_points, pm25_time, pm25_outof
+    curses.endwin()
+    os.system('clear')
+    print("""Complete.""")
+    time.sleep(3)
+    os.system('clear')
+    print("Going to results page in 5")
+    time.sleep(1)
+    os.system('clear')
+    print("Going to results page in 4")
+    time.sleep(1)
+    os.system('clear')
+    print("Going to results page in 3")
+    time.sleep(1)
+    os.system('clear')
+    print("Going to results page in 2")
+    time.sleep(1)
+    os.system('clear')
+    print("Going to results page in 1")
+    time.sleep(1)
+    os.system('clear')
+    print("Going to results page in 0")
+    time.sleep(1)
+    os.system('clear')
+    if pm25_points < 4:
+        stringy2 = ("Cool!")
+    elif pm25_points < 2:
+        stringy2 = ("Bad. Very bad.")
+    elif pm25_points == 7:
+        stringy2 = ("Perfect!")
+    print("""
+RESULTS:
+
+
+You got %d out of 7 samples detected.
+
+%s
+
+Would you like to 'continue' or 'retry'?
+
+""" % (pm25_outof, stringy2))
+    cont_retry_korea = input("> ")
+    if cont_retry_korea == 'continue':
+        if pm25_points > 5:
+            korea_done = True
+            what_do = ("""
+You create a cheap and resource-effective HEPA (high-efficiency particulate arrestance) filter
+for companies in South Korea to replicate.""")
+            for character in what_do:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.07)
+            prompt_game()
+        elif pm25_points < 3:
+            korea_done = False
+            sure = ("""
+Are you sure? You haven't done well enough in this country, this will not count as progress.
+
+(y/n)\n\n""")
+            for character in sure:
+                sys.stdout.write(character)
+                sys.stdout.flush()
+                time.sleep(0.07)
+            sure_input = input("> ")
+            if sure_input.lower().strip() == 'y':
+                prompt_game()
+            elif sure_input.lower().strip() == 'n':
+                os.system('clear')
+                print("You will be directed to the Virtual Room in a moment...")
+                time.sleep(3)
+                prompt_game()
+    if cont_retry_korea == 'retry':
+        print("You will be directed to South Korea in a moment...")
+        time.sleep(3)
+        build_korea()
+
+
 
 
 
@@ -2846,7 +5132,7 @@ Type in 'measure' to measure.\n\n""")
 You press 'measure'.
 
 
-The air pollution levels are quite high as well.
+The air pollution levels are quite high.
 
 It comes from oil production, I think.
 
@@ -2869,7 +5155,7 @@ To build a machine, you must have knowledge of climate change.\n""")
     ques_10 = ("""
 You must answer 3 questions about climate change to build a machine.
 
-(Hint. [explore] will help you get more info.)\n""")
+(Hint. Stuck? [explore] will help you get more info.)\n""")
     for character in ques_10:
         sys.stdout.write(character)
         sys.stdout.flush()
@@ -3114,8 +5400,9 @@ Would you like to [retry] or [continue]?
         elif input_score_print == 'continue':
             if points == 3:
                 printer = ("""
-You built a solar power generator magnifier design and a prototype for the 
-government to reproduce. It seems they've realized what they're doing to the environment.
+You built a solar power generator magnifier design and a prototype for the
+government to reproduce, and sent it to them anonymously. It seems they've
+realized what they're doing to the environment.
 
 
 Good job. 9 more to go.\n\n\n""")
@@ -3131,7 +5418,7 @@ Good job. 9 more to go.\n\n\n""")
                 prompt_game()
             elif points == 2:
                 printer = ("""
-You built a generator powered by C02 to attach to cars, and sold the designs to the government. 
+You built a generator powered by C02 to attach to cars, and sold the designs to the government.
 
 Good job. 9 more to go.\n\n\n""")
                 for character in printer:
@@ -3146,9 +5433,10 @@ Good job. 9 more to go.\n\n\n""")
                 prompt_game()
             elif points == 1:
                 printer = ("""
-You struggled, but could not think of something to help the environment. Sorry, Granddad.
+You struggled, but could not think of something to help the environment, as you don't have 
+enough data. Sorry, Granddad.
 
-\n\n\n""")
+You failed to complete this country. Try again.\n\n\n""")
                 for character in printer:
                     sys.stdout.write(character)
                     sys.stdout.flush()
@@ -3156,6 +5444,10 @@ You struggled, but could not think of something to help the environment. Sorry, 
                 time.sleep(3)
                 os.system('clear')
                 canada_done = False
+                perfect = False
+                outof = 5
+                points = 0
+                questions = 1
                 print("[Returning to Virtual Room...]")
                 time.sleep(3)
                 prompt_game()
@@ -3167,7 +5459,7 @@ You struggled, but could not think of something to help the environment. Sorry, 
 
 
 
-                
+
 
 
 
